@@ -1,87 +1,136 @@
-
 "use client";
 
-import React, { useState } from "react";
-import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // or from radix directly
-import { Folder, FileText } from "lucide-react";
+import * as React from "react";
+import { ArchiveX, BirdIcon, Command, File, Inbox, Send, Trash2 } from "lucide-react";
 
-const dummyFolders = [
-  {
-    name: "Projects",
-    children: [
-      { name: "Kanji Combat", type: "file" },
-      { name: "Algorithm Quest", type: "file" },
-    ],
-  },
-  {
-    name: "Blogs",
-    children: [
-      { name: "OOP in Python", type: "file" },
-      { name: "Bio-Computer", type: "file" },
-    ],
-  },
-];
+import { Label } from "@/components/ui/label";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarInput,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import {
+  Telescope,
+  Anvil,
+  LineChart,
+  Origami,
+  Swords,
+  Bird,
+  GitFork,
+} from "lucide-react";
 
-const FolderView = ({ folders }: { folders: typeof dummyFolders }) => {
-  return (
-    <div className="mt-4 space-y-2">
-      {folders.map((folder, idx) => (
-        <div key={idx}>
-          <div className="flex items-center gap-2 font-medium text-sm">
-            <Folder className="w-4 h-4" />
-            {folder.name}
-          </div>
-          <div className="ml-6 mt-1 space-y-1 text-sm text-muted-foreground">
-            {folder.children.map((file, i) => (
-              <div key={i} className="flex items-center gap-2 cursor-pointer hover:text-foreground">
-                <FileText className="w-4 h-4" />
-                {file.name}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+// This is sample data
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  navMain: [
+    { name: "Graph view", icon: GitFork, href: "/graph-view" },
+    { name: "Blogs", icon: Telescope, href: "/blog" },
+    { name: "Projects", icon: Anvil, href: "/project" },
+    { name: "Stats", icon: LineChart, href: "/statistic" },
+    { name: "Flashcard", icon: Swords, href: "/flashcard" },
+    { name: "Showcase", icon: Origami, href: "/showcase" },
+  ],
+  
 };
 
-const LeftSideBar = () => {
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleSidebar = () => setIsCollapsed((prev) => !prev);
+export function LeftSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
+  // Note: I'm using state to show active item.
+  // IRL you should use the url/router.
+  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
+  const { setOpen } = useSidebar();
 
   return (
-    <motion.aside
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: isCollapsed ? -200 : 0, opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={`hidden lg:flex flex-col p-4 border-r border-border/50 bg-background/95 backdrop-blur-sm relative overflow-hidden ${
-        isCollapsed ? "w-24" : "w-64"
-      }`}
+    <Sidebar
+      collapsible="icon"
+      className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+      {...props}
     >
-      <Tabs defaultValue="explorer" className="w-full">
-        <TabsList className="grid grid-cols-2 bg-muted rounded-md mb-3">
-          <TabsTrigger value="explorer">Explorer</TabsTrigger>
-          <TabsTrigger value="search">Search</TabsTrigger>
-        </TabsList>
+      {/* This is the first sidebar */}
+      {/* We disable collapsible and adjust width to icon. */}
+      {/* This will make the sidebar appear as icons. */}
+      <Sidebar
+        collapsible="none"
+        className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
+      >
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
+                <a href="/">
+                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                    <BirdIcon className="size-4" />
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">Acme Inc</span>
+                    <span className="truncate text-xs">Enterprise</span>
+                  </div>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent className="px-1.5 md:px-0">
+              <SidebarMenu>
+                {data.navMain.map((item) => (
+                  <SidebarMenuItem key={item.name}>
+                    <SidebarMenuButton
+                      tooltip={{
+                        children: item.name,
+                        hidden: false,
+                      }}
+                      
+                      isActive={activeItem?.name === item.name}
+                      className="px-2.5 md:px-2"
+                    >
+                      <item.icon />
+                      <span>{item.name}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
 
-        <TabsContent value="explorer">
-          <FolderView folders={dummyFolders} />
-        </TabsContent>
-
-        <TabsContent value="search">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full px-2 py-1 rounded-md border text-sm"
-          />
-        </TabsContent>
-      </Tabs>
-    </motion.aside>
+      {/* This is the second sidebar */}
+      {/* We disable collapsible and let it fill remaining space */}
+      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
+        <SidebarHeader className="border-b h-10">
+          <div className="flex w-full items-center justify-between">
+            <div className="text-foreground text-base font-medium">
+              {activeItem?.name}
+            </div>
+            <Label className="flex items-center  text-sm">
+              <span>Unreads</span>
+            </Label>
+          </div>
+          
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup className="px-0">
+            <SidebarGroupContent>
+             
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </Sidebar>
   );
-};
-
-export default LeftSideBar;
+}

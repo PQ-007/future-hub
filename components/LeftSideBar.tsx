@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { ArchiveX, BirdIcon, Command, File, Inbox, Send, Trash2 } from "lucide-react";
+import * as React from "react"
+import { Anvil, ArchiveX, Command, File, Home, Inbox, LineChart, Origami, Send, Swords, Telescope, Trash2 } from "lucide-react"
 
-import { Label } from "@/components/ui/label";
+
+import { Label } from "@/components/ui/label"
 import {
   Sidebar,
   SidebarContent,
@@ -16,16 +17,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import {
-  Telescope,
-  Anvil,
-  LineChart,
-  Origami,
-  Swords,
-  Bird,
-  GitFork,
-} from "lucide-react";
+} from "@/components/ui/sidebar"
+
 
 // This is sample data
 const data = {
@@ -35,23 +28,20 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
-    { name: "Graph view", icon: GitFork, href: "/graph-view" },
-    { name: "Blogs", icon: Telescope, href: "/blog" },
-    { name: "Projects", icon: Anvil, href: "/project" },
-    { name: "Stats", icon: LineChart, href: "/statistic" },
-    { name: "Flashcard", icon: Swords, href: "/flashcard" },
-    { name: "Showcase", icon: Origami, href: "/showcase" },
+    { title: "Home", icon: Home, href: "/home" },
+    { title: "Blogs", icon: Telescope, href: "/blog" },
+    { title: "Projects", icon: Anvil, href: "/project" },
+    { title: "Stats", icon: LineChart, href: "/statistic" },
+    { title: "Flashcard", icon: Swords, href: "/flashcard" },
+    { title: "Showcase", icon: Origami, href: "/showcase" },
   ],
-  
 };
 
-export function LeftSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+export function LeftSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
-  const { setOpen } = useSidebar();
+  const [activeItem, setActiveItem] = React.useState(data.navMain[0])
+  const { setOpen } = useSidebar()
 
   return (
     <Sidebar
@@ -72,7 +62,7 @@ export function LeftSidebar({
               <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
                 <a href="/">
                   <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                    <BirdIcon className="size-4" />
+                    <Command className="size-4" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">Acme Inc</span>
@@ -88,18 +78,18 @@ export function LeftSidebar({
             <SidebarGroupContent className="px-1.5 md:px-0">
               <SidebarMenu>
                 {data.navMain.map((item) => (
-                  <SidebarMenuItem key={item.name}>
+                  <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       tooltip={{
-                        children: item.name,
+                        children: item.title,
                         hidden: false,
                       }}
                       
-                      isActive={activeItem?.name === item.name}
+                      isActive={activeItem?.title === item.title}
                       className="px-2.5 md:px-2"
                     >
                       <item.icon />
-                      <span>{item.name}</span>
+                      <span>{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -107,30 +97,31 @@ export function LeftSidebar({
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+     
       </Sidebar>
 
       {/* This is the second sidebar */}
       {/* We disable collapsible and let it fill remaining space */}
       <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-        <SidebarHeader className="border-b h-10">
+        <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-foreground text-base font-medium">
-              {activeItem?.name}
+              {activeItem?.title}
             </div>
-            <Label className="flex items-center  text-sm">
+            <Label className="flex items-center gap-2 text-sm">
               <span>Unreads</span>
             </Label>
           </div>
-          
+          <SidebarInput placeholder="Type to search..." />
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-             
+              
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
     </Sidebar>
-  );
+  )
 }

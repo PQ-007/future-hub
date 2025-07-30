@@ -22,7 +22,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Label } from "@/components/ui/label";
 
 // Type definitions for data
 interface NavItem {
@@ -70,7 +69,10 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
         {navItems.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton
-              tooltip={item.title}
+              tooltip={{
+                children: item.title,
+                hidden: false, // Explicitly ensure tooltip is not hidden
+              }}
               isActive={activePath === item.href}
               className="px-2.5 md:px-2"
               asChild
@@ -79,11 +81,10 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  // Only close sidebar on mobile after navigation
                   if (isMobile) {
                     setOpen(false);
                   }
-                  router.push(item.href); // Use client-side navigation
+                  router.push(item.href);
                 }}
                 aria-label={`Navigate to ${item.title}`}
               >
@@ -149,15 +150,10 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
 
       {/* Secondary Sidebar */}
       <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-        <SidebarHeader className="gap-3.5  p-2">
-          <div className="flex w-full items-center justify-between">
-            <div className="text-foreground text-base font-medium">
-              {activeItem.title}
-            </div>
-          </div>
-
+        <SidebarHeader className="border-b p-2">
+          {activeItem.title}
         </SidebarHeader>
-        <SidebarContent className="border-t">
+        <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               <div className="p-4 text-sm text-foreground">

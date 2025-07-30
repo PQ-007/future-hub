@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { RightSidebar, RightSidebarProvider } from "@/components/RightSidebar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { LeftSidebar } from "@/components/LeftSidebar";
+import { LeftSidebar } from "@/components/LeftSideBar";
 const ThemeToggleButton = dynamic(
   () => import("../components/theme/ThemeToggleButton"),
   { ssr: false }

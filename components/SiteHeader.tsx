@@ -5,7 +5,7 @@ import { RightSidebarTrigger} from "./RightSidebar"
 
 export function SiteHeader() {
   return (
-    <header className="flex h-10 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear ">
+    <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear ">
       <div className="flex w-full items-center gap-1  lg:gap-2 lg:px-3">
         <SidebarTrigger className="-ml-1" />
         <Separator

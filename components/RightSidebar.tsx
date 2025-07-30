@@ -36,7 +36,6 @@ const RightSidebar = () => {
             Settings
           </h2>
         )}
-        ok
       </div>
 
 

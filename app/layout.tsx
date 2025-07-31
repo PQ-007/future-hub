@@ -8,16 +8,13 @@ import dynamic from "next/dynamic";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import VerticalNavbar from "@/components/VerticalNavbar";
-import LeftSideBar from "@/components/LeftSideBar";
-import RightSidebar from "@/components/RightSidebar";
-
-// Dynamically import ThemeToggleButton to avoid SSR issues
+import { RightSidebar, RightSidebarProvider } from "@/components/RightSidebar";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { LeftSidebar } from "@/components/LeftSideBar";
 const ThemeToggleButton = dynamic(
   () => import("../components/theme/ThemeToggleButton"),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,29 +31,29 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="min-h-screen">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <div className="flex min-h-screen ">
-            {/*Left panel */}
-            <VerticalNavbar />
-            <LeftSideBar />
-
-            {/* Main content area */}
-            <main className="flex-1 md:p-5 md:px-8  overflow-y-auto">
-              {children}
-            </main>
-
-            {/* Right panel */}
-            <RightSidebar />
-            
-          </div>
-        </ThemeProvider>
+    <html lang="en" className={cn("dark h-full")} suppressHydrationWarning>
+      <body className="h-full">
+        <RightSidebarProvider>
+          <SidebarProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={false}
+              disableTransitionOnChange
+            >
+              <div className="flex w-full flex-col md:flex-row h-full">
+                <LeftSidebar />
+                <main className="flex-1 h-full">
+                  <SiteHeader />
+                  <div className="flex-1 md:p-5 md:px-8 overflow-y-auto">
+                    {children}
+                  </div>
+                </main>
+                <RightSidebar />
+              </div>
+            </ThemeProvider>
+          </SidebarProvider>
+        </RightSidebarProvider>
       </body>
     </html>
   );

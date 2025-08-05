@@ -64,6 +64,13 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
     const { setOpen, isMobile } = useSidebar();
     const router = useRouter();
 
+    const handleNavigation = (href: string) => {
+      if (isMobile) {
+        setOpen(false);
+      }
+      router.push(href);
+    };
+
     return (
       <SidebarMenu>
         {navItems.map((item) => (
@@ -71,26 +78,20 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
             <SidebarMenuButton
               tooltip={{
                 children: item.title,
-                hidden: false, // Explicitly ensure tooltip is not hidden
+                hidden: false,
               }}
               isActive={activePath === item.href}
-              className="px-2.5 md:px-2"
+              className="px-2.5 md:px-2 w-full"
               asChild
             >
-              <a
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (isMobile) {
-                    setOpen(false);
-                  }
-                  router.push(item.href);
-                }}
+              <button
+                onClick={() => handleNavigation(item.href)}
+                className="flex w-full items-center gap-2 text-left"
                 aria-label={`Navigate to ${item.title}`}
               >
-                <item.icon className="size-4" />
-                <span>{item.title}</span>
-              </a>
+                <item.icon className="size-4 shrink-0" />
+                <span className="truncate">{item.title}</span>
+              </button>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
@@ -98,8 +99,10 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
     );
   });
 
+NavMenu.displayName = "NavMenu";
+
 export function LeftSidebar({ ...props }: LeftSidebarProps) {
-  const { setOpen, isMobile } = useSidebar();
+  const { setOpen, isMobile, open } = useSidebar();
   const pathname = usePathname();
 
   // Find active item based on current pathname
@@ -108,14 +111,14 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
 
   return (
     <Sidebar
-      collapsible="icon"
-      className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+      collapsible={isMobile ? "offcanvas" : "icon"}
+      className="overflow-hidden md:*:data-[sidebar=sidebar]:flex-row"
       {...props}
     >
       {/* Primary Sidebar */}
       <Sidebar
         collapsible="none"
-        className="w-[calc(var(--sidebar-width-icon)+1px)] border-r"
+        className="w-full md:w-[calc(var(--sidebar-width-icon)+1px)] md:border-r"
       >
         <SidebarHeader>
           <SidebarMenu>
@@ -123,22 +126,31 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
               <SidebarMenuButton
                 size="lg"
                 asChild
-                className="md:h-8 md:p-0"
-                aria-label="Acme Inc Dashboard"
+                className="h-10 md:h-8 md:p-0 px-2"
+                aria-label="Sugureta Engineer Dashboard"
               >
-                <a href="/">
-                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                <button
+                  onClick={() => {
+                    if (isMobile) setOpen(false);
+                    // Navigate to home or handle logo click
+                  }}
+                  className="flex w-full items-center gap-2"
+                >
+                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg shrink-0">
                     <Command className="size-4" />
                   </div>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">Acme Inc</span>
-                    <span className="truncate text-xs">Enterprise</span>
+                  <div className="grid flex-1 text-left text-sm leading-tight min-w-0">
+                    <span className="truncate font-medium">
+                      Sugureta Engineer
+                    </span>
+                    <span className="truncate text-xs"></span>
                   </div>
-                </a>
+                </button>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
+
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
@@ -148,23 +160,27 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
         </SidebarContent>
       </Sidebar>
 
-      {/* Secondary Sidebar */}
-      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-        <SidebarHeader className="border-b p-2">
-          {activeItem.title}
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup className="px-0">
-            <SidebarGroupContent>
-              <div className="p-4 text-sm text-foreground">
-                Content for {activeItem.title} goes here. This could include
-                lists, details, or sub-navigation relevant to the selected
-                section.
-              </div>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
+      {/* Secondary Sidebar - Only show on desktop when not mobile */}
+      {!isMobile && (
+        <Sidebar collapsible="none" className="hidden flex-1 md:flex">
+          <SidebarHeader className="border-b h-12  p-3">
+            <h1 className="text-sm md:text-base font-medium truncate">
+              {activeItem.title}
+            </h1>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarGroup className="px-0">
+              <SidebarGroupContent>
+                <div className="p-4 text-sm text-muted-foreground">
+                  Content for {activeItem.title} goes here. This could include
+                  lists, details, or sub-navigation relevant to the selected
+                  section.
+                </div>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+      )}
     </Sidebar>
   );
 }

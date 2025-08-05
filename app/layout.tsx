@@ -5,13 +5,12 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import dynamic from "next/dynamic";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import { RightSidebar, RightSidebarProvider } from "@/components/RightSidebar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { LeftSidebar } from "@/components/LeftSideBar";
+
 const ThemeToggleButton = dynamic(
   () => import("../components/theme/ThemeToggleButton"),
   { ssr: false }
@@ -24,15 +23,51 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Check for mobile screen size
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, [mounted]);
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <html lang="en" className={cn("dark h-full")} suppressHydrationWarning>
+        <body className={cn(inter.className, "h-full overflow-hidden")}>
+          <div className="flex h-full w-full">
+            <div className="flex-1 flex flex-col">
+              <div className="h-12 border-b bg-background"></div>
+              <main className="flex-1 overflow-y-auto">
+                <div className="h-full p-4 md:p-6 lg:p-8">
+                  {children}
+                </div>
+              </main>
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
 
   return (
     <html lang="en" className={cn("dark h-full")} suppressHydrationWarning>
-      <body className="h-full">
+      <body className={cn(inter.className, "h-full overflow-hidden")}>
         <RightSidebarProvider>
           <SidebarProvider>
             <ThemeProvider
@@ -40,15 +75,32 @@ export default function RootLayout({
               defaultTheme="dark"
               enableSystem={false}
               disableTransitionOnChange
+              storageKey="theme-preference"
             >
-              <div className="flex w-full flex-col md:flex-row h-full">
-                <LeftSidebar />
-                <main className="flex-1 h-full">
+              <div className="flex h-full w-full">
+                {/* Left Sidebar - Hidden on mobile unless opened */}
+                <div className="hidden md:block">
+                  <LeftSidebar />
+                </div>
+                
+                {/* Mobile Left Sidebar Overlay */}
+                <div className="md:hidden">
+                  <LeftSidebar />
+                </div>
+
+                {/* Main Content Area */}
+                <div className="flex flex-1 flex-col min-w-0">
                   <SiteHeader />
-                  <div className="flex-1 md:p-5 md:px-8 overflow-y-auto">
-                    {children}
-                  </div>
-                </main>
+                  
+                  {/* Main Content */}
+                  <main className="flex-1 overflow-y-auto">
+                    <div className="h-full p-4 md:p-6 lg:p-8">
+                      {children}
+                    </div>
+                  </main>
+                </div>
+
+                {/* Right Sidebar - Show on all screen sizes but with different behavior */}
                 <RightSidebar />
               </div>
             </ThemeProvider>

@@ -36,6 +36,7 @@
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #27272a;
   --sidebar-ring: #1e40af;
+  --sidebar-width: 256px; /* Set standard sidebar width */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -57,40 +58,64 @@
 }
 
 .light {
-  --background: #ffffff;
-  --foreground: #0f0f23;
+  /* Soft, warm background instead of pure white */
+  --background: #faf9f7;
+  --foreground: #2c2926;
+  
+  /* Cards with subtle warmth */
   --card: #ffffff;
-  --card-foreground: #0f0f23;
-  --popover: #ffffff;
-  --popover-foreground: #0f0f23;
-  --primary: #1e40af;
+  --card-foreground: #2c2926;
+  
+  /* Popovers with soft tint */
+  --popover: #fefefe;
+  --popover-foreground: #2c2926;
+  
+  /* Rich but not harsh primary */
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f0f23;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
+  
+  /* Gentle secondary colors */
+  --secondary: #f5f3f0;
+  --secondary-foreground: #44403c;
+  
+  /* Soft muted tones */
+  --muted: #f7f5f3;
+  --muted-foreground: #78716c;
+  
+  /* Warmer accent */
   --accent: #3b82f6;
-  --accent-foreground: #0f0f23;
+  --accent-foreground: #1f2937;
+  
+  /* Softer destructive */
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #f8fafc;
-  --ring: #1e40af;
-  --chart-1: #1e40af;
+  
+  /* Gentle borders */
+  --border: #e7e5e4;
+  --input: #f9f7f4;
+  --ring: #2563eb;
+  
+  /* Chart colors with better contrast */
+  --chart-1: #2563eb;
   --chart-2: #0891b2;
   --chart-3: #059669;
   --chart-4: #d97706;
   --chart-5: #dc2626;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #0f0f23;
-  --sidebar-primary: #1e40af;
+  
+  /* Sidebar with warm neutral */
+  --sidebar: #f8f6f3;
+  --sidebar-foreground: #292524;
+  --sidebar-primary: #2563eb;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f1f5f9;
-  --sidebar-accent-foreground: #0f0f23;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #1e40af;
-  --glow: 0 0 20px rgb(30 64 175 / 0.2);
-  --glow-strong: 0 0 40px rgb(30 64 175 / 0.3);
+  --sidebar-accent: #f1ede9;
+  --sidebar-accent-foreground: #44403c;
+  --sidebar-border: #e7e5e4;
+  --sidebar-ring: #2563eb;
+  --sidebar-width: 256px;
+  
+  /* Softer glow effects */
+  --glow: 0 0 20px rgb(37 99 235 / 0.15);
+  --glow-strong: 0 0 40px rgb(37 99 235 / 0.25);
 }
 
 @theme inline {
@@ -172,11 +197,12 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/* Improved light mode glassmorphism */
 .glass-light {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(231, 229, 228, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
 /* Gradient backgrounds */
@@ -187,17 +213,36 @@ body {
 .gradient-mesh {
   background: radial-gradient(
       circle at 20% 80%,
-      rgba(139, 92, 246, 0.15) 0%,
+      rgba(139, 92, 246, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 20%,
-      rgba(6, 182, 212, 0.15) 0%,
+      rgba(6, 182, 212, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 40% 40%,
-      rgba(16, 185, 129, 0.15) 0%,
+      rgba(16, 185, 129, 0.08) 0%,
+      transparent 50%
+    );
+}
+
+/* Light mode specific gradient mesh */
+.light .gradient-mesh {
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(139, 92, 246, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(6, 182, 212, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(16, 185, 129, 0.04) 0%,
       transparent 50%
     );
 }
@@ -320,6 +365,12 @@ body {
   color: var(--primary-foreground);
 }
 
+/* Light mode selection with softer colors */
+.light ::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--foreground);
+}
+
 /* Focus styles */
 .focus-ring:focus {
   outline: none;
@@ -347,6 +398,7 @@ body {
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar-width: 256px; /* Standard sidebar width for dark theme */
 }
 
 @layer base {
@@ -355,5 +407,207 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Sidebar width utilities */
+.sidebar-width {
+  width: var(--sidebar-width);
+}
+
+/* Mobile-specific improvements */
+
+/* Mobile touch targets */
+@media (max-width: 768px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve button sizes for mobile */
+  button, [role="button"] {
+    min-height: 40px;
+  }
+  
+  /* Sidebar mobile adjustments - Use standard width */
+  [data-sidebar="sidebar"] {
+    width: var(--sidebar-width) !important;
+  }
+  
+  /* Header adjustments */
+  header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  /* Main content padding for mobile */
+  main {
+    padding: 16px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Adjust sidebar widths for tablet - Use standard width */
+  [data-sidebar="sidebar"] {
+    width: var(--sidebar-width);
+  }
+  
+  main {
+    padding: 20px;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Reduce header height in landscape */
+  header {
+    height: 44px;
+  }
+  
+  /* Adjust main content */
+  main {
+    padding: 12px;
+  }
+}
+
+/* Safe area adjustments for mobile devices with notches */
+@supports (padding: max(0px)) {
+  .safe-area-inset {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Improved mobile scrolling */
+@media (max-width: 768px) {
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Hide scrollbars on mobile for cleaner look */
+  .mobile-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mobile-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Mobile menu animations */
+@media (max-width: 768px) {
+  .mobile-menu-enter {
+    animation: slideInLeft 0.3s ease-out;
+  }
+  
+  .mobile-menu-exit {
+    animation: slideOutLeft 0.3s ease-in;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+/* Mobile-first responsive breakpoints */
+.container-mobile {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-mobile {
+    max-width: 640px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-mobile {
+    max-width: 768px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-mobile {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-mobile {
+    max-width: 1280px;
+  }
+}
+
+/* Mobile-optimized cards */
+@media (max-width: 768px) {
+  .card-mobile {
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+  
+  .card-mobile:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Improved mobile focus states */
+@media (max-width: 768px) {
+  .focus-mobile:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Mobile-specific utility classes */
+.hide-mobile {
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.show-mobile {
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+.mobile-full-width {
+  @media (max-width: 767px) {
+    width: 100% !important;
+  }
+}
+
+/* Mobile overlay for sidebars */
+.mobile-overlay {
+  @media (max-width: 767px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    backdrop-filter: blur(4px);
   }
 }

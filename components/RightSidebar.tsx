@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { Globe, Palette, Brain, ChevronRight, PanelRightIcon, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { useSidebar } from "./RightSidebarTrigger";
 
 // Dynamic import for ThemeToggleButton to prevent SSR issues
 const ThemeToggleButton = dynamic(
@@ -20,30 +21,7 @@ const languages = [
   { code: "jp", name: "日本語", flag: "🇯🇵", active: false },
 ];
 
-const RightSidebarContext = createContext({
-  isRightSidebarCollapsed: false,
-  toggleRightSidebar: () => {},
-});
-
-const RightSidebarProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
-  const [isRightSidebarCollapsed, setIsRightSidebarCollapsed] = useState(true); // Start collapsed
-
-  const toggleRightSidebar = useCallback(() => {
-    setIsRightSidebarCollapsed(!isRightSidebarCollapsed);
-  }, [isRightSidebarCollapsed]);
-
-  return (
-    <RightSidebarContext.Provider
-      value={{ isRightSidebarCollapsed, toggleRightSidebar }}
-    >
-      {children}
-    </RightSidebarContext.Provider>
-  );
-};
-
-const useSidebar = () => useContext(RightSidebarContext);
-
-const RightSidebar = () => {
+export const RightSidebar = () => {
   const { isRightSidebarCollapsed, toggleRightSidebar } = useSidebar();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -250,26 +228,7 @@ const RightSidebar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Mobile-specific additional content */}
-              {isMobile && (
-                <div className="space-y-3 pt-4 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4" />
-                    <h3 className="text-sm font-medium">Quick Actions</h3>
-                  </div>
-                  <div className="space-y-2 pl-6">
-                    <button className="w-full p-3 text-sm bg-muted hover:bg-accent hover:text-accent-foreground rounded-md transition-colors touch-target text-left">
-                      View Profile
-                    </button>
-                    <button className="w-full p-3 text-sm bg-muted hover:bg-accent hover:text-accent-foreground rounded-md transition-colors touch-target text-left">
-                      Settings
-                    </button>
-                    <button className="w-full p-3 text-sm bg-muted hover:bg-accent hover:text-accent-foreground rounded-md transition-colors touch-target text-left">
-                      Help & Support
-                    </button>
-                  </div>
-                </div>
-              )}
+              
             </div>
           </motion.aside>
         )}
@@ -278,20 +237,5 @@ const RightSidebar = () => {
   );
 };
 
-const RightSidebarTrigger = () => {
-  const { isRightSidebarCollapsed, toggleRightSidebar } = useSidebar();
 
-  return (
-    <Button
-      variant="ghost"
-      className="size-7 p-2 rounded-md transition-colors hover:bg-muted"
-      size="icon"
-      onClick={toggleRightSidebar}
-      aria-label={isRightSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-    >
-      <PanelRightIcon className="w-4 h-4  hover:text-foreground transition-colors" />
-    </Button>
-  );
-};
 
-export { RightSidebar, RightSidebarTrigger, RightSidebarProvider, useSidebar };

@@ -6,15 +6,11 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { RightSidebar, RightSidebarProvider } from "@/components/RightSidebar";
+import { RightSidebarProvider } from "@/components/RightSidebarTrigger";
+import { RightSidebar } from "@/components/RightSidebar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { LeftSidebar } from "@/components/LeftSideBar";
-
-const ThemeToggleButton = dynamic(
-  () => import("../components/theme/ThemeToggleButton"),
-  { ssr: false }
-);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,15 +30,15 @@ export default function RootLayout({
   // Check for mobile screen size
   useEffect(() => {
     if (!mounted) return;
-    
+
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
     checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => window.removeEventListener('resize', checkIsMobile);
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => window.removeEventListener("resize", checkIsMobile);
   }, [mounted]);
 
   // Prevent hydration mismatch by not rendering until mounted
@@ -54,9 +50,7 @@ export default function RootLayout({
             <div className="flex-1 flex flex-col">
               <div className="h-12 border-b bg-background"></div>
               <main className="flex-1 overflow-y-auto">
-                <div className="h-full p-4 md:p-6 lg:p-8">
-                  {children}
-                </div>
+                <div className="h-full p-4 md:p-6 lg:p-8">{children}</div>
               </main>
             </div>
           </div>
@@ -82,21 +76,19 @@ export default function RootLayout({
                 <div className="hidden md:block">
                   <LeftSidebar />
                 </div>
-                
+
                 {/* Mobile Left Sidebar Overlay */}
                 <div className="md:hidden">
                   <LeftSidebar />
                 </div>
 
                 {/* Main Content Area */}
-                <div className="flex flex-1 flex-col min-w-0">
+                <div className="flex flex-1 flex-col min-w-0 h-screen overflow-hidden">
                   <SiteHeader />
-                  
+
                   {/* Main Content */}
-                  <main className="flex-1 overflow-y-auto">
-                    <div className="h-full p-4 md:p-6 lg:p-8">
-                      {children}
-                    </div>
+                  <main className="flex-1 overflow-y-auto relative">
+                    <div className="h-full p-4 md:p-6 lg:p-8">{children}</div>
                   </main>
                 </div>
 

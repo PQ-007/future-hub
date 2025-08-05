@@ -3,12 +3,13 @@
 import * as React from "react";
 import {
   Anvil,
-  Command,
+  BirdIcon,
   LineChart,
   Origami,
   Route,
   Swords,
   Telescope,
+  UserRound,
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -104,7 +105,7 @@ NavMenu.displayName = "NavMenu";
 export function LeftSidebar({ ...props }: LeftSidebarProps) {
   const { setOpen, isMobile, open } = useSidebar();
   const pathname = usePathname();
-
+  const router = useRouter();
   // Find active item based on current pathname
   const activeItem =
     data.navMain.find((item) => item.href === pathname) || data.navMain[0];
@@ -132,12 +133,13 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
                 <button
                   onClick={() => {
                     if (isMobile) setOpen(false);
-                    // Navigate to home or handle logo click
+                    router.push("/");
+
                   }}
                   className="flex w-full items-center gap-2"
                 >
-                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg shrink-0">
-                    <Command className="size-4" />
+                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full shrink-0">
+                    <BirdIcon className="size-4" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight min-w-0">
                     <span className="truncate font-medium">

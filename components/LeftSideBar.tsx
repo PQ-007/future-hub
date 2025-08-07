@@ -4,17 +4,17 @@ import * as React from "react";
 import {
   Anvil,
   BirdIcon,
-  LineChart,
   Origami,
   Route,
   Swords,
   Telescope,
-  UserRound,
+  SwatchBook,
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -23,6 +23,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { NavUser } from "./NavUser";
 
 // Type definitions for data
 interface NavItem {
@@ -31,27 +32,20 @@ interface NavItem {
   href: string;
 }
 
+
+
 interface SidebarData {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
   navMain: NavItem[];
 }
 
 // Sample data
 const data: SidebarData = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+ 
   navMain: [
-    { title: "Blogs", icon: Telescope, href: "/blog" },
-    { title: "Projects", icon: Anvil, href: "/project" },
-    { title: "Stats", icon: LineChart, href: "/statistic" },
-    { title: "Flashcard", icon: Swords, href: "/flashcard" },
+    { title: "Blog", icon: Telescope, href: "/blog" },
+    { title: "Project", icon: Anvil, href: "/project" },
+    { title: "Flashcard", icon: SwatchBook, href: "/flashcard" },
+    { title: "Contest", icon: Swords, href: "/contest" },
     { title: "Roadmap", icon: Route, href: "/roadmap" },
     { title: "Showcase", icon: Origami, href: "/showcase" },
   ],
@@ -82,15 +76,15 @@ const NavMenu: React.FC<{ navItems: NavItem[]; activePath: string }> =
                 hidden: false,
               }}
               isActive={activePath === item.href}
-              className="px-2.5 md:px-2 w-full"
+              className="px-3 md:px-2 w-full"
               asChild
             >
               <button
                 onClick={() => handleNavigation(item.href)}
-                className="flex w-full items-center gap-2 text-left"
+                className="flex w-full items-center text-left"
                 aria-label={`Navigate to ${item.title}`}
               >
-                <item.icon className="size-4 shrink-0" />
+                <item.icon className="size-4" />
                 <span className="truncate">{item.title}</span>
               </button>
             </SidebarMenuButton>
@@ -134,12 +128,11 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
                   onClick={() => {
                     if (isMobile) setOpen(false);
                     router.push("/");
-
                   }}
                   className="flex w-full items-center gap-2"
                 >
                   <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full shrink-0">
-                    <BirdIcon className="size-4" />
+                    <BirdIcon className="size-5" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight min-w-0">
                     <span className="truncate font-medium">
@@ -161,6 +154,7 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
+      
 
       {/* Secondary Sidebar - Only show on desktop when not mobile */}
       {!isMobile && (

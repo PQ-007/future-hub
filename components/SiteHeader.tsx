@@ -12,12 +12,22 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Fragment } from "react";
+import { NavUser } from "./NavUser";
+import { useSupabase } from "./providers/supabase-provider";
 export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
+  const { supabase, session } = useSupabase();
+ 
+  const user = {
+    name: session ? session.user.user_metadata.name || "Guest" : "Guest",
+    email: session ? session.user.email : "",
+    avatar: session ? session.user.user_metadata.avatar_url || '' : '',
+  };
+
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b bg-background px-3 transition-[width,height] ease-linear">
-      <div className="flex w-full items-center gap-2">
+      <div className="flex w-full items-center justify-around gap-2">
         {/* Mobile and Desktop Sidebar Trigger */}
         <SidebarTrigger className="flex md:flex -ml-1 p-1" />
 
@@ -35,6 +45,7 @@ export function SiteHeader() {
               </BreadcrumbItem>
 
               {pathname !== "/" &&
+                pathname !== "/sign-in" &&
                 pathname
                   .split("/")
                   .filter(Boolean)
@@ -77,16 +88,7 @@ export function SiteHeader() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-1 md:gap-2">
-          <Button
-            variant={"ghost"}
-            className="m-1 rounded-4xl "
-            size={"sm"}
-            onClick={() => {
-              router.push("/about-me");
-            }}
-          >
-            About me
-          </Button>
+          <RightSidebarTrigger />
 
           <Separator
             orientation="vertical"
@@ -94,7 +96,25 @@ export function SiteHeader() {
           />
 
           {/* Right Sidebar Trigger - Show on all screen sizes */}
-          <RightSidebarTrigger />
+          {session ? (
+            <NavUser
+              user={{
+                name: user.name,
+                email: user.email || "",
+                avatar: user.avatar,
+              }}
+            />
+          ) : (
+            <Button
+              className=" rounded-full w-auto h-6 "
+              size={"sm"}
+              onClick={() => {
+                router.push("/sign-in");
+              }}
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       </div>
     </header>

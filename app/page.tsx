@@ -1,17 +1,9 @@
-// app/page.tsx
-'use client';
+import React from 'react'
 
-import { useSearchParams } from 'next/navigation';
-
-export default function Home() {
-  const searchParams = useSearchParams();
-  const error = searchParams.get('error');
-
+const page = () => {
   return (
-    <div>
-      {error && <p style={{ color: 'red' }}>{decodeURIComponent(error)}</p>}
-      <h1>Welcome</h1>
-      {/* Your homepage content */}
-    </div>
-  );
+    <div>page</div>
+  )
 }
+
+export default page

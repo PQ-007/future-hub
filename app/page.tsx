@@ -1,20 +1,17 @@
-import { ChartRadarGridFill } from "@/components/chart/test";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+// app/page.tsx
+'use client';
+
+import { useSearchParams } from 'next/navigation';
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+
   return (
-    <div className="h-full flex flex-col">
-      <div className="pb-5">{/* Breadcrumb content */}</div>
-      <div className="flex-1 min-h-0">
-        <ChartRadarGridFill />
-      </div>
+    <div>
+      {error && <p style={{ color: 'red' }}>{decodeURIComponent(error)}</p>}
+      <h1>Welcome</h1>
+      {/* Your homepage content */}
     </div>
   );
 }

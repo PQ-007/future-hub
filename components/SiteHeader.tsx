@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -13,22 +15,24 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Fragment } from "react";
 import { NavUser } from "./NavUser";
-import { useSupabase } from "./providers/supabase-provider";
+import { useAuth } from "@/contexts/AuthContext";
+import { Search } from "lucide-react";
+import { Input } from "./ui/input";
+
 export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
-  const { supabase, session } = useSupabase();
+  const { user } = useAuth();
 
-  const user = {
-    name: session ? session.user.user_metadata.name || "Guest" : "Guest",
-    email: session ? session.user.email : "",
-    avatar: session ? session.user.user_metadata.avatar_url || "" : "",
+  const userData = {
+    name: user?.user_metadata?.name || "No username",
+    email: user?.email || "",
+    avatar: user?.user_metadata?.avatar_url || "",
   };
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b bg-background px-3 transition-[width,height] ease-linear">
       <div className="flex w-full items-center justify-around gap-2">
-        {/* Mobile and Desktop Sidebar Trigger */}
         <SidebarTrigger className="flex md:flex -ml-1 p-1" />
 
         <Separator
@@ -36,7 +40,6 @@ export function SiteHeader() {
           className="hidden md:block data-[orientation=vertical]:h-4"
         />
 
-        {/* Title - Responsive sizing */}
         <h1 className="text-sm md:text-base font-medium truncate">
           <Breadcrumb>
             <BreadcrumbList>
@@ -45,7 +48,7 @@ export function SiteHeader() {
               </BreadcrumbItem>
 
               {pathname !== "/" &&
-                pathname !== "/sign-in" &&
+              
                 pathname
                   .split("/")
                   .filter(Boolean)
@@ -83,10 +86,12 @@ export function SiteHeader() {
           </Breadcrumb>
         </h1>
 
-        {/* Spacer */}
         <div className="flex-1" />
+        <div className="hidden md:flex items-center relative w-full max-w-sm">
+          <Search className="absolute left-2 h-4 w-4 text-muted-foreground" />
+          <Input type="search" placeholder="Search..." className="pl-8 w-max" />
+        </div>
 
-        {/* Right side actions */}
         <div className="flex items-center gap-1 md:gap-2">
           <RightSidebarTrigger />
 
@@ -95,22 +100,13 @@ export function SiteHeader() {
             className="hidden md:block data-[orientation=vertical]:h-4"
           />
 
-          {/* Right Sidebar Trigger - Show on all screen sizes */}
-          {session ? (
-            <NavUser
-              user={{
-                name: user.name,
-                email: user.email || "",
-                avatar: user.avatar,
-              }}
-            />
+          {user ? (
+            <NavUser user={userData} />
           ) : (
             <Button
-              className=" rounded-full w-auto h-6 "
-              size={"sm"}
-              onClick={() => {
-                router.push("/auth/login");
-              }}
+              className="rounded-full w-auto h-6"
+              size="sm"
+              onClick={() => router.push("/signin")}
             >
               Sign In
             </Button>

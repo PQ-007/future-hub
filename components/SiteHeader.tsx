@@ -18,11 +18,11 @@ export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const { supabase, session } = useSupabase();
- 
+
   const user = {
     name: session ? session.user.user_metadata.name || "Guest" : "Guest",
     email: session ? session.user.email : "",
-    avatar: session ? session.user.user_metadata.avatar_url || '' : '',
+    avatar: session ? session.user.user_metadata.avatar_url || "" : "",
   };
 
   return (
@@ -109,7 +109,7 @@ export function SiteHeader() {
               className=" rounded-full w-auto h-6 "
               size={"sm"}
               onClick={() => {
-                router.push("/sign-in");
+                router.push("/auth/login");
               }}
             >
               Sign In

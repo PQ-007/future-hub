@@ -1,10 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { RightSidebarTrigger } from "./RightSidebarTrigger";
-import { useRouter, usePathname } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,104 +8,140 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Fragment } from "react";
-import { NavUser } from "./NavUser";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/AuthContext";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Fragment, useState } from "react";
 import { Input } from "./ui/input";
+import ThemeToggleButton from "./ThemeToggleSwitch";
+import { NavUser } from "./NavUser";
+
+// Utility function to format breadcrumb segments
+const formatSegment = (segment: string) =>
+  segment
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
 export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const userData = {
-    name: user?.user_metadata?.name || "No username",
+    name: user?.user_metadata?.name || "Guest",
     email: user?.email || "",
     avatar: user?.user_metadata?.avatar_url || "",
   };
 
+  // Generate breadcrumb items
+  const breadcrumbItems = pathname
+    .split("/")
+    .filter(Boolean)
+    .map((segment, index, array) => {
+      const path = `/${array.slice(0, index + 1).join("/")}`;
+      return { segment, path, isLast: index === array.length - 1 };
+    });
+
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b bg-background px-3 transition-[width,height] ease-linear">
-      <div className="flex w-full items-center justify-around gap-2">
-        <SidebarTrigger className="flex md:flex -ml-1 p-1" />
+    <header className="sticky top-0 z-50 flex h-12 shrink-0 items-center gap-4 border-b bg-background/95 px-4 transition-all ease-linear supports-[backdrop-filter]:backdrop-blur-sm">
+      <div className="flex w-full items-center justify-between gap-4">
+        {/* Sidebar Trigger */}
+        <SidebarTrigger
+          className="flex p-1 hover:bg-muted rounded-md transition-colors"
+          aria-label="Toggle sidebar"
+        />
 
         <Separator
           orientation="vertical"
-          className="hidden md:block data-[orientation=vertical]:h-4"
+          className="hidden md:block h-6"
+          aria-hidden="true"
         />
 
-        <h1 className="text-sm md:text-base font-medium truncate">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb className="flex-1 truncate">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="text-sm md:text-base">
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            {pathname !== "/" &&
+              breadcrumbItems.map(({ segment, path, isLast }, index) => (
+                <Fragment key={index}>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    {isLast ? (
+                      <BreadcrumbPage className="text-sm md:text-base font-medium">
+                        {formatSegment(segment)}
+                      </BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink
+                        href={path}
+                        className="text-sm md:text-base hover:text-primary transition-colors"
+                      >
+                        {formatSegment(segment)}
+                      </BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                </Fragment>
+              ))}
+          </BreadcrumbList>
+        </Breadcrumb>
 
-              {pathname !== "/" &&
-              
-                pathname
-                  .split("/")
-                  .filter(Boolean)
-                  .map((segment, index, array) => (
-                    <Fragment key={index}>
-                      <BreadcrumbSeparator />
-                      <BreadcrumbItem>
-                        {index === array.length - 1 ? (
-                          <BreadcrumbPage>
-                            {segment
-                              .split("-")
-                              .map(
-                                (word) =>
-                                  word.charAt(0).toUpperCase() + word.slice(1)
-                              )
-                              .join(" ")}
-                          </BreadcrumbPage>
-                        ) : (
-                          <BreadcrumbLink
-                            href={`/${array.slice(0, index + 1).join("/")}`}
-                          >
-                            {segment
-                              .split("-")
-                              .map(
-                                (word) =>
-                                  word.charAt(0).toUpperCase() + word.slice(1)
-                              )
-                              .join(" ")}
-                          </BreadcrumbLink>
-                        )}
-                      </BreadcrumbItem>
-                    </Fragment>
-                  ))}
-            </BreadcrumbList>
-          </Breadcrumb>
-        </h1>
-
-        <div className="flex-1" />
-        <div className="hidden md:flex items-center relative w-full max-w-sm">
-          <Search className="absolute left-2 h-4 w-4 text-muted-foreground" />
-          <Input type="search" placeholder="Search..." className="pl-8 w-max" />
+        {/* Search Bar */}
+        <div className="flex  items-center gap-2">
+          <div
+            className={`relative w-full max-w-xs transition-all  duration-300 ${
+              isSearchOpen ? "block" : "hidden md:block"
+            }`}
+          >
+            <Search
+              className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              aria-hidden="true"
+            />
+            <Input
+              type="search"
+              placeholder="Search..."
+              className="pl-10 pr-8 w-full text-sm focus:ring-2 focus:ring-primary rounded-md h-8"
+              aria-label="Search site content"
+            />
+            {isSearchOpen && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-1 top-1/2 -translate-y-1/2 p-1"
+                onClick={() => setIsSearchOpen(false)}
+                aria-label="Clear search"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden"
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            aria-label={isSearchOpen ? "Close search" : "Open search"}
+          >
+            <Search className="h-5 w-5" />
+          </Button>
         </div>
 
-        <div className="flex items-center gap-1 md:gap-2">
-          <RightSidebarTrigger />
-
+        {/* User Actions */}
+        <div className="flex items-center gap-2">
           <Separator
             orientation="vertical"
-            className="hidden md:block data-[orientation=vertical]:h-4"
+            className="hidden md:block h-6"
+            aria-hidden="true"
           />
 
-          {user ? (
-            <NavUser user={userData} />
-          ) : (
-            <Button
-              className="rounded-full w-auto h-6"
-              size="sm"
-              onClick={() => router.push("/signin")}
-            >
-              Sign In
-            </Button>
-          )}
+          <NavUser user={userData} />
         </div>
       </div>
     </header>

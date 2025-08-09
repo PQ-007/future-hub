@@ -1,29 +1,28 @@
 "use client";
 
-import * as React from "react";
-import {
-  Anvil,
-  BirdIcon,
-  Origami,
-  Route,
-  Swords,
-  Telescope,
-  SwatchBook,
-} from "lucide-react";
-import { useRouter, usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+  useSidebar
 } from "@/components/ui/sidebar";
-import { NavUser } from "./NavUser";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  Anvil,
+  BirdIcon,
+  Origami,
+  Route,
+  SwatchBook,
+  Swords,
+  Telescope,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import * as React from "react";
 
 // Type definitions for data
 interface NavItem {
@@ -32,15 +31,12 @@ interface NavItem {
   href: string;
 }
 
-
-
 interface SidebarData {
   navMain: NavItem[];
 }
 
 // Sample data
 const data: SidebarData = {
- 
   navMain: [
     { title: "Blog", icon: Telescope, href: "/blog" },
     { title: "Project", icon: Anvil, href: "/project" },
@@ -104,6 +100,14 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
   const activeItem =
     data.navMain.find((item) => item.href === pathname) || data.navMain[0];
 
+  const { user } = useAuth();
+
+  const userData = {
+    name: user?.user_metadata?.name || "No username",
+    email: user?.email || "",
+    avatar: user?.user_metadata?.avatar_url || "",
+  };
+
   return (
     <Sidebar
       collapsible={isMobile ? "offcanvas" : "icon"}
@@ -132,7 +136,7 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
                   className="flex w-full items-center gap-2"
                 >
                   <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full shrink-0">
-                    <BirdIcon className="size-5" />
+                    <BirdIcon className="size-5 hover:size-6 hover:rotate-15" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight min-w-0">
                     <span className="truncate font-medium">
@@ -154,7 +158,6 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-      
 
       {/* Secondary Sidebar - Only show on desktop when not mobile */}
       {!isMobile && (

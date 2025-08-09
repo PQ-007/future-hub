@@ -57,6 +57,12 @@
   --glow-strong: 0 0 40px rgb(30 64 175 / 0.5);
 }
 
+
+* {
+  caret-color: transparent; /* Hides cursor globally */
+  user-select: none; /* Prevents text selection */
+}
+
 .light {
   /* Soft, warm background instead of pure white */
   --background: #faf9f7;
@@ -83,7 +89,7 @@
   --muted-foreground: #78716c;
   
   /* Warmer accent */
-  --accent: #3b82f6;
+  --accent: #719be2;
   --accent-foreground: #1f2937;
   
   /* Softer destructive */
@@ -92,7 +98,7 @@
   
   /* Gentle borders */
   --border: #e7e5e4;
-  --input: #f9f7f4;
+  --input: #2563eb;
   --ring: #2563eb;
   
   /* Chart colors with better contrast */

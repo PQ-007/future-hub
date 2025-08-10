@@ -15,9 +15,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Search, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
-import { Input } from "./ui/input";
-import ThemeToggleButton from "./ThemeToggleSwitch";
 import { NavUser } from "./NavUser";
+import { Input } from "./ui/input";
 
 // Utility function to format breadcrumb segments
 const formatSegment = (segment: string) =>
@@ -50,39 +49,33 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 flex h-12 shrink-0 items-center gap-4 border-b bg-background/95 px-4 transition-all ease-linear supports-[backdrop-filter]:backdrop-blur-sm">
       <div className="flex w-full items-center justify-between gap-4">
-        {/* Sidebar Trigger */}
-        <SidebarTrigger
-          className="flex p-1 hover:bg-muted rounded-md transition-colors"
-          aria-label="Toggle sidebar"
-        />
+       
 
-        <Separator
-          orientation="vertical"
-          className="hidden md:block h-6"
-          aria-hidden="true"
-        />
+       
 
         {/* Breadcrumb Navigation */}
         <Breadcrumb className="flex-1 truncate">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/" className="text-sm md:text-base">
+              <BreadcrumbLink href="/" >
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             {pathname !== "/" &&
+              pathname !== "/signin" &&
+              pathname !== "/signup" &&
               breadcrumbItems.map(({ segment, path, isLast }, index) => (
                 <Fragment key={index}>
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>
                     {isLast ? (
-                      <BreadcrumbPage className="text-sm md:text-base font-medium">
+                      <BreadcrumbPage >
                         {formatSegment(segment)}
                       </BreadcrumbPage>
                     ) : (
                       <BreadcrumbLink
                         href={path}
-                        className="text-sm md:text-base hover:text-primary transition-colors"
+                        className=" hover:text-primary transition-colors"
                       >
                         {formatSegment(segment)}
                       </BreadcrumbLink>
@@ -140,8 +133,17 @@ export function SiteHeader() {
             className="hidden md:block h-6"
             aria-hidden="true"
           />
-
-          <NavUser user={userData} />
+          {user ? (
+            <NavUser user={userData} />
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push("/signin")}
+            >
+              <span className="text-sm ">Sign in</span>
+            </Button>
+          )}
         </div>
       </div>
     </header>

@@ -15,11 +15,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   Anvil,
   BirdIcon,
-  Origami,
+  Rocket,
   Route,
   SwatchBook,
   Swords,
-  Telescope,
+  Telescope
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
@@ -41,9 +41,8 @@ const data: SidebarData = {
     { title: "Blog", icon: Telescope, href: "/blog" },
     { title: "Project", icon: Anvil, href: "/project" },
     { title: "Flashcard", icon: SwatchBook, href: "/flashcard" },
-    { title: "Contest", icon: Swords, href: "/contest" },
-    { title: "Roadmap", icon: Route, href: "/roadmap" },
-    { title: "Showcase", icon: Origami, href: "/showcase" },
+    { title: "Competition", icon: Swords, href: "/competition" },
+    { title: "Showcase", icon: Rocket, href: "/showcase" },
   ],
 };
 
@@ -109,14 +108,9 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
   };
 
   return (
-    <Sidebar
-      collapsible={isMobile ? "offcanvas" : "icon"}
-      className="overflow-hidden md:*:data-[sidebar=sidebar]:flex-row"
-      {...props}
-    >
-      {/* Primary Sidebar */}
+
       <Sidebar
-        collapsible="none"
+        collapsible="icon"
         className="w-full md:w-[calc(var(--sidebar-width-icon)+1px)] md:border-r"
       >
         <SidebarHeader>
@@ -158,28 +152,10 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
+      
+      
 
-      {/* Secondary Sidebar - Only show on desktop when not mobile */}
-      {!isMobile && (
-        <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-          <SidebarHeader className="border-b h-12  p-3">
-            <h1 className="text-sm md:text-base font-medium truncate">
-              {activeItem.title}
-            </h1>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup className="px-0">
-              <SidebarGroupContent>
-                <div className="p-4 text-sm text-muted-foreground">
-                  Content for {activeItem.title} goes here. This could include
-                  lists, details, or sub-navigation relevant to the selected
-                  section.
-                </div>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
-      )}
-    </Sidebar>
+   
+   
   );
 }

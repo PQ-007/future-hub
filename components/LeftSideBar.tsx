@@ -17,6 +17,8 @@ import {
   BirdIcon,
   Rocket,
   Route,
+  Store,
+  StoreIcon,
   SwatchBook,
   Swords,
   Telescope
@@ -43,6 +45,7 @@ const data: SidebarData = {
     { title: "Flashcard", icon: SwatchBook, href: "/flashcard" },
     { title: "Competition", icon: Swords, href: "/competition" },
     { title: "Showcase", icon: Rocket, href: "/showcase" },
+    { title: "Store", icon: Store, href: "/store" },
   ],
 };
 
@@ -147,7 +150,7 @@ export function LeftSidebar({ ...props }: LeftSidebarProps) {
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
-              <NavMenu navItems={data.navMain} activePath={pathname} />
+              <NavMenu navItems={data.navMain} activePath={activeItem.href} />
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

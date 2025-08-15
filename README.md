@@ -1,3 +1,2 @@
 
-
-yr n bol ene turshilt
+ui push

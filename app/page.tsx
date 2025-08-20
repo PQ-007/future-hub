@@ -19,7 +19,7 @@ export default function HomePage() {
 
   return (
     <>
-      {isAuthenticated ? (
+      {user.loading ? (
           <DashboardPage />
       ) : (
         <div className="space-y-16">

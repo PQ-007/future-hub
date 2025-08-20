@@ -27,7 +27,7 @@ const formatSegment = (segment: string) =>
 
 export function SiteHeader() {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
   const { user } = useAuth();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -49,7 +49,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 flex h-12 shrink-0 items-center gap-4 border-b bg-background/95 px-4 transition-all ease-linear supports-[backdrop-filter]:backdrop-blur-sm">
       <div className="flex w-full items-center justify-between gap-4">
-       
+       <SidebarTrigger/>
 
        
 

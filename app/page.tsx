@@ -20,6 +20,8 @@ export default function HomePage() {
   return (
     <>
       {user.loading ? (
+        <div>Loading...</div>
+      ) : isAuthenticated ? (
           <DashboardPage />
       ) : (
         <div className="space-y-16">

@@ -130,19 +130,7 @@ export default function MediumPage() {
     <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
       {/* Main Content */}
       <div className="w-full md:w-2/3 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <h1 className="text-2xl font-bold tracking-tight">For You</h1>
-          <div className="flex items-center bg-gray-100 rounded-full px-3 py-1.5 w-full md:w-72">
-            <Search className="w-4 h-4 text-gray-500 mr-2" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-transparent outline-none flex-1 text-sm"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
+        
 
         <div className="space-y-6">
           {filteredPosts.length > 0 ? (
@@ -151,7 +139,7 @@ export default function MediumPage() {
                 <div className="w-28 h-20 flex-shrink-0">
                   <img
                     src={post.image}
-                    alt={post.title}
+    
                     className="w-full h-full object-cover rounded-md"
                   />
                 </div>
@@ -163,7 +151,7 @@ export default function MediumPage() {
                   <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
                     <img
                       src={post.avatar}
-                      alt={post.author}
+                    
                       className="w-5 h-5 rounded-full"
                     />
                     <span>{post.author}</span>
@@ -219,7 +207,7 @@ export default function MediumPage() {
               <div className="flex items-center gap-2">
                 <img
                   src={follow.avatar}
-                  alt={follow.name}
+               
                   className="w-8 h-8 rounded-full"
                 />
                 <div>

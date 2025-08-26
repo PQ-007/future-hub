@@ -9,7 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import "./globals.css";
-import 'antd/dist/reset.css';
+
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });

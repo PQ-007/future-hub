@@ -618,3 +618,124 @@ body {
   }
 }
 
+.custom-tree-view .ant-tree {
+          background: transparent !important;
+          color: var(--sidebar-foreground) !important;
+          font-size: 14px !important;
+        }
+        
+        .custom-tree-view .ant-tree-node-content-wrapper {
+          border-radius: 6px !important;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          color: inherit !important;
+          line-height: 1.4 !important;
+        }
+        
+        .custom-tree-view .ant-tree-node-content-wrapper:hover {
+          background: transparent !important;
+        }
+        
+        .custom-tree-view .ant-tree-node-content-wrapper.ant-tree-node-selected {
+          background: transparent !important;
+          box-shadow: none !important;
+        }
+        
+        .custom-tree-view .ant-tree-treenode {
+          padding: 1px 0 !important;
+          margin: 1px 0 !important;
+        }
+        
+        .custom-tree-view .ant-tree-treenode::before {
+          background: transparent !important;
+        }
+        
+        .custom-tree-view .ant-tree-indent-unit {
+          width: 20px !important;
+        }
+        
+        .custom-tree-view .ant-tree-switcher {
+          background: transparent !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 20px !important;
+          height: 28px !important;
+          border-radius: 4px !important;
+          transition: all 0.2s !important;
+        }
+        
+        .custom-tree-view .ant-tree-switcher:hover {
+          background: var(--sidebar-accent) !important;
+        }
+        
+        .custom-tree-view .ant-tree-switcher-noop {
+          width: 20px !important;
+        }
+        
+        .custom-tree-view .ant-tree-draggable-icon {
+          display: none !important;
+        }
+        
+        .custom-tree-view .ant-tree-drop-indicator {
+          background-color: var(--sidebar-primary) !important;
+          height: 2px !important;
+          border-radius: 1px !important;
+        }
+        
+        .custom-tree-view .ant-tree-treenode-draggable {
+          cursor: grab !important;
+        }
+        
+        .custom-tree-view .ant-tree-treenode-draggable:active {
+          cursor: grabbing !important;
+        }
+        
+        .custom-tree-view .ant-tree-node-content-wrapper-close,
+        .custom-tree-view .ant-tree-node-content-wrapper-open {
+          padding: 0 !important;
+        }
+        
+        .custom-tree-view .ant-tree-title {
+          width: 100% !important;
+        }
+        
+        /* Drag over effects */
+        .custom-tree-view .ant-tree-drop-container {
+          position: relative !important;
+        }
+        
+        .custom-tree-view .ant-tree-drop-container::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background: var(--sidebar-primary) !important;
+          opacity: 0.1 !important;
+          border-radius: 6px !important;
+          pointer-events: none !important;
+        }
+        
+        .custom-tree-view .ant-tree-drag-over-gap-top {
+          border-top: 2px solid var(--sidebar-primary) !important;
+          border-radius: 1px !important;
+        }
+        
+        .custom-tree-view .ant-tree-drag-over-gap-bottom {
+          border-bottom: 2px solid var(--sidebar-primary) !important;
+          border-radius: 1px !important;
+        }
+        
+        /* Remove default focus outlines and add custom ones */
+        .custom-tree-view .ant-tree-focused:not(:hover):not(.ant-tree-active-focused) .ant-tree-node-selected {
+          background: transparent !important;
+        }
+        
+        .custom-tree-view .ant-tree:focus-visible {
+          outline: 2px solid var(--sidebar-ring) !important;
+          outline-offset: 2px !important;
+          border-radius: 6px !important;
+        }

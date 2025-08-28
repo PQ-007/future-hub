@@ -1,6 +1,6 @@
 "use client";
 
-import { LeftSidebar } from "@/components/LeftSideBar";
+import { LeftSidebar } from "@/components/sidebar-collection/LeftSideBar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AuthProvider } from "@/contexts/AuthContext";

@@ -2,7 +2,13 @@ import React from 'react'
 
 const DashboardPage = () => {
   return (
-    <div>ᠢᠷᠡᢉᠡᠳᠦᠢ ᠶ᠋ᠢᠨ ᠲᠥᠪ</div>
+    <p
+  lang="mn-Mong"
+  className="font-[Noto_Sans_Mongolian] [writing-mode:vertical-lr] [text-orientation:mixed] text-2xl leading-snug"
+>
+  ᠮᠣᠩᠭᠣᠯ ᠮᠢᠨ᠎ᠡ ᠬᠡᠯᠡ
+</p>
+
   )
 }
 

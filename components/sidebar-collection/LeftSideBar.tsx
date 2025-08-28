@@ -1,5 +1,6 @@
 "use client";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
@@ -17,12 +18,12 @@ import {
   Anvil,
   BirdIcon,
   FolderPlus,
-  Rocket,
+  GraduationCap,
   SquarePen,
   Store,
   SwatchBook,
   Swords,
-  Telescope
+  Telescope,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
@@ -50,30 +51,31 @@ interface SidebarData {
 const data: SidebarData = {
   navMain: [
     {
-      title: "Blog",
-      icon: Telescope,
-      href: "/blog",
-    },
-    {
-      title: "Project",
-      icon: Anvil,
-      href: "/project",
-    },
-    {
-      title: "Flashcard",
-      icon: SwatchBook,
-      href: "/flashcard",
-    },
-    {
-      title: "Competition",
+      title: "Competitions",
       icon: Swords,
       href: "/competition",
     },
     {
-      title: "Showcase",
-      icon: Rocket,
-      href: "/showcase",
+      title: "Learn",
+      icon: GraduationCap,
+      href: "/learn",
     },
+    {
+      title: "Blogs",
+      icon: Telescope,
+      href: "/blog",
+    },
+    {
+      title: "Projects",
+      icon: Anvil,
+      href: "/project",
+    },
+    {
+      title: "Flashcards",
+      icon: SwatchBook,
+      href: "/flashcard",
+    },
+
     {
       title: "Store",
       icon: Store,
@@ -257,6 +259,7 @@ export function LeftSidebar({
               />
             </SidebarGroupContent>
           </SidebarGroup>
+         
         </SidebarContent>
       </Sidebar>
 
@@ -274,12 +277,12 @@ export function LeftSidebar({
         />
 
         {/* Tree View Content - Pass active section to TreeView */}
-        <div className="flex-1 overflow-hidden max-w-[245px] ">
-          <TreeView 
-            showQuickActions={false} 
-            activeSection={activeItem?.href || "/"} 
+        <ScrollArea className="flex-1 overflow-hidden w-[256px] ">
+          <TreeView
+            showQuickActions={false}
+            activeSection={activeItem?.href || "/"}
           />
-        </div>
+        </ScrollArea>
       </Sidebar>
     </Sidebar>
   );

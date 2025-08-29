@@ -52,7 +52,8 @@
     "react-resizable-panels": "^3.0.4",
     "recharts": "^2.15.4",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

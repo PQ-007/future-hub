@@ -1,239 +1,272 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Calendar, Clock, Eye, Heart, MessageCircle, Search, Filter, Plus } from "lucide-react";
 import { useState } from "react";
-import { Search } from "lucide-react";
 
-const blogPosts = [
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  publishedAt: string;
+  readTime: number;
+  tags: string[];
+  views: number;
+  likes: number;
+  comments: number;
+  status: "published" | "draft";
+}
+
+const samplePosts: BlogPost[] = [
   {
-    id: 1,
-    title: "I Automated My Life With AI and Made $3,000 This Month (Here’s My Exact System)",
-    excerpt: "Stop working harder. Start working with AI. Your productivity stack is broken. Here’s how to fix it.",
-    author: "Berker Ceylan",
-    date: "Jul 15",
-    views: "19.8K",
-    comments: "82",
-    avatar: "https://via.placeholder.com/40",
-    image: "https://via.placeholder.com/800x400",
+    id: "1",
+    title: "Getting Started with React Server Components",
+    excerpt: "Learn how to leverage the power of React Server Components in your Next.js applications for better performance and user experience.",
+    content: "",
+    author: { name: "Alex Johnson", avatar: "/api/placeholder/32/32" },
+    publishedAt: "2024-12-15",
+    readTime: 8,
+    tags: ["React", "Next.js", "Server Components"],
+    views: 1247,
+    likes: 89,
+    comments: 23,
+    status: "published"
   },
   {
-    id: 2,
-    title: "Common side effects of not drinking",
-    excerpt: "By rejecting alcohol, you reject something very human, an extra limb that we have collectively grown to deal with reality and with...",
-    author: "Karolina Kozmana",
-    date: "Jan 22, 2024",
-    views: "60K",
-    comments: "2038",
-    avatar: "https://via.placeholder.com/40",
-    image: "https://via.placeholder.com/800x400",
+    id: "2",
+    title: "Advanced TypeScript Tips for Better Code",
+    excerpt: "Discover advanced TypeScript patterns and techniques that will make your code more robust and maintainable.",
+    content: "",
+    author: { name: "Sarah Chen", avatar: "/api/placeholder/32/32" },
+    publishedAt: "2024-12-10",
+    readTime: 12,
+    tags: ["TypeScript", "JavaScript", "Best Practices"],
+    views: 892,
+    likes: 67,
+    comments: 15,
+    status: "published"
   },
   {
-    id: 3,
-    title: "Future-Proof Careers in the Age of AI: What You Should Learn in 2026",
-    excerpt: "What if I told you that by this time next year, you could land a job that pays over $100,000—and it won’t be threatened by AI?",
-    author: "Iswarya writes",
-    date: "Jul 30",
-    views: "2.6K",
-    comments: "123",
-    avatar: "https://via.placeholder.com/40",
-    image: "https://via.placeholder.com/800x400",
+    id: "3",
+    title: "Building Scalable REST APIs with Node.js",
+    excerpt: "A comprehensive guide to building robust and scalable REST APIs using Node.js, Express, and modern best practices.",
+    content: "",
+    author: { name: "Mike Rodriguez", avatar: "/api/placeholder/32/32" },
+    publishedAt: "2024-12-05",
+    readTime: 15,
+    tags: ["Node.js", "REST API", "Backend"],
+    views: 1543,
+    likes: 124,
+    comments: 34,
+    status: "published"
   },
   {
-    id: 4,
-    title: "Stop Using These Apps Instead of Doomscrolling on Your iPhone",
-    excerpt: "These apps will actually be worth your time",
-    author: "The Useful Tech",
-    date: "Apr 25",
-    views: "3.4K",
-    comments: "116",
-    avatar: "https://via.placeholder.com/40",
-    image: "https://via.placeholder.com/800x400",
-  },
-  {
-    id: 5,
-    title: "AI killed my coding brain but I'm rebuilding it",
-    excerpt: "We sprinted into the AI age of autocomplete IDEs now we're",
-    author: "<devtips/>",
-    date: "Unknown",
-    views: "Unknown",
-    comments: "Unknown",
-    avatar: "https://via.placeholder.com/40",
-    image: "https://via.placeholder.com/800x400",
-  },
+    id: "4",
+    title: "Next.js 15 Features Deep Dive",
+    excerpt: "Exploring the latest features and improvements in Next.js 15 and how they can enhance your development workflow.",
+    content: "",
+    author: { name: "Emma Wilson", avatar: "/api/placeholder/32/32" },
+    publishedAt: "2024-11-28",
+    readTime: 10,
+    tags: ["Next.js", "React", "Web Development"],
+    views: 756,
+    likes: 45,
+    comments: 12,
+    status: "draft"
+  }
 ];
 
-const staffPicks = [
-  {
-    id: 1,
-    title: "In Sharing Food by Ninad Kulkarni",
-    subtitle: "Eating With My Hands Doesn’t Make Me Less Civilised",
-    date: "Jul 4",
-  },
-  {
-    id: 2,
-    title: "In the Wind Phone by Jim Parton",
-    subtitle: "Member-only story: What Happens Next?",
-    date: "Jun 21",
-  },
-  {
-    id: 3,
-    title: "How the #ILookLikeAnEngineer Ad Campaign Happened Ten Years Ago",
-    author: "Michelle Glauser",
-    date: "Aug 3",
-  },
-];
+export default function BlogPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft">("all");
 
-const recommendedTopics = [
-  "Fiction", "Web Development", "Education", "Film", "Poetry", "Creativity", "Java",
-];
+  // Get all unique tags
+  const allTags = Array.from(new Set(samplePosts.flatMap(post => post.tags)));
 
-const whoToFollow = [
-  {
-    id: 1,
-    name: "Bagus Muljadi",
-    title: "I'm an Assistant Professor at a UK Russell Group...",
-    avatar: "https://via.placeholder.com/40",
-    followLink: "#",
-  },
-  {
-    id: 2,
-    name: "Level Up Coding",
-    title: "Publication tutorials and news. The developer homepage...",
-    avatar: "https://via.placeholder.com/40",
-    followLink: "#",
-  },
-  {
-    id: 3,
-    name: "Thomas Ricouard",
-    title: "iOS/Mac & Web dev | No...",
-    avatar: "https://via.placeholder.com/40",
-    followLink: "#",
-  },
-];
+  // Filter posts based on search and filters
+  const filteredPosts = samplePosts.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTag = selectedTag === "" || post.tags.includes(selectedTag);
+    const matchesStatus = statusFilter === "all" || post.status === statusFilter;
+    
+    return matchesSearch && matchesTag && matchesStatus;
+  });
 
-const readingList = [
-  {
-    id: 1,
-    title: "Machine Learning is Fun!",
-    author: "Adam Geitgey",
-    date: "May 6, 2014",
-  },
-];
-
-export default function MediumPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredPosts = blogPosts.filter((post) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
-      {/* Main Content */}
-      <div className="w-full md:w-2/3 space-y-8">
-        
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Blog Posts</h1>
+          <p className="text-muted-foreground mt-1">
+            Share knowledge and insights with the community
+          </p>
+        </div>
+        <Button className="flex items-center gap-2">
+          <Plus className="h-4 w-4" />
+          New Post
+        </Button>
+      </div>
 
-        <div className="space-y-6">
-          {filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => (
-              <article key={post.id} className="flex gap-4 border-b pb-4">
-                <div className="w-28 h-20 flex-shrink-0">
-                  <img
-                    src={post.image}
-    
-                    className="w-full h-full object-cover rounded-md"
-                  />
-                </div>
-                <div className="flex flex-col justify-between flex-1">
-                  <div>
-                    <h2 className="text-lg font-semibold leading-snug">{post.title}</h2>
-                    <p className="text-gray-600 text-sm line-clamp-2">{post.excerpt}</p>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                    <img
-                      src={post.avatar}
-                    
-                      className="w-5 h-5 rounded-full"
-                    />
-                    <span>{post.author}</span>
-                    <span>•</span>
-                    <span>{post.date}</span>
-                    <span>•</span>
-                    <span>{post.views} views</span>
-                    <span>•</span>
-                    <span>{post.comments} comments</span>
-                  </div>
-                </div>
-              </article>
-            ))
-          ) : (
-            <p className="text-gray-500">No matching articles found.</p>
-          )}
+      {/* Filters and Search */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input
+            placeholder="Search posts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        
+        <div className="flex gap-2">
+          <select
+            value={selectedTag}
+            onChange={(e) => setSelectedTag(e.target.value)}
+            className="px-3 py-2 border border-input rounded-md bg-background text-sm"
+          >
+            <option value="">All Tags</option>
+            {allTags.map(tag => (
+              <option key={tag} value={tag}>{tag}</option>
+            ))}
+          </select>
+          
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as "all" | "published" | "draft")}
+            className="px-3 py-2 border border-input rounded-md bg-background text-sm"
+          >
+            <option value="all">All Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
         </div>
       </div>
 
-      {/* Right Sidebar */}
-      <div className="w-full md:w-1/3 space-y-6">
-        {/* Staff Picks */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Staff Picks</h2>
-          {staffPicks.map((pick) => (
-            <div key={pick.id} className="text-sm text-gray-600 mb-2">
-              <p className="font-medium">{pick.title}</p>
-              <p className="text-gray-500">{pick.subtitle}</p>
-              <p className="text-gray-400">{pick.author || ""} {pick.date}</p>
-            </div>
-          ))}
-          <p className="text-sm text-blue-600 cursor-pointer">See the full list</p>
-        </div>
+      {/* Blog Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-2xl font-bold">{samplePosts.filter(p => p.status === 'published').length}</div>
+            <p className="text-xs text-muted-foreground">Published Posts</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-2xl font-bold">{samplePosts.filter(p => p.status === 'draft').length}</div>
+            <p className="text-xs text-muted-foreground">Draft Posts</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-2xl font-bold">{samplePosts.reduce((acc, p) => acc + p.views, 0).toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">Total Views</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-2xl font-bold">{samplePosts.reduce((acc, p) => acc + p.likes, 0)}</div>
+            <p className="text-xs text-muted-foreground">Total Likes</p>
+          </CardContent>
+        </Card>
+      </div>
 
-        {/* Recommended Topics */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Recommended topics</h2>
-          <div className="flex flex-wrap gap-2">
-            {recommendedTopics.map((topic, index) => (
-              <span key={index} className="text-sm bg-gray-100 rounded-full px-2 py-1 text-gray-700">
-                {topic}
-              </span>
-            ))}
-          </div>
-          <p className="text-sm text-blue-600 cursor-pointer mt-2">See more topics</p>
-        </div>
-
-        {/* Who to Follow */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Who to follow</h2>
-          {whoToFollow.map((follow) => (
-            <div key={follow.id} className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <img
-                  src={follow.avatar}
-               
-                  className="w-8 h-8 rounded-full"
-                />
-                <div>
-                  <p className="text-sm font-medium">{follow.name}</p>
-                  <p className="text-xs text-gray-500">{follow.title}</p>
+      {/* Blog Posts Grid */}
+      <div className="grid gap-6">
+        {filteredPosts.map((post) => (
+          <Card key={post.id} className="hover:shadow-md transition-shadow">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>
+                      {post.status}
+                    </Badge>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Eye className="h-3 w-3" />
+                        {post.views}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Heart className="h-3 w-3" />
+                        {post.likes}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MessageCircle className="h-3 w-3" />
+                        {post.comments}
+                      </div>
+                    </div>
+                  </div>
+                  <CardTitle className="text-xl mb-2">{post.title}</CardTitle>
+                  <CardDescription className="text-base">{post.excerpt}</CardDescription>
                 </div>
               </div>
-              <button className="text-sm text-blue-600 border border-blue-600 rounded-full px-3 py-1">
-                Follow
-              </button>
-            </div>
-          ))}
-          <p className="text-sm text-blue-600 cursor-pointer">See more suggestions</p>
-        </div>
-
-        {/* Your Reading List */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Your Reading list</h2>
-          {readingList.map((item) => (
-            <div key={item.id} className="text-sm text-gray-600 mb-2">
-              <p className="font-medium">{item.title}</p>
-              <p className="text-gray-500">{item.author} {item.date}</p>
-            </div>
-          ))}
-        </div>
+              
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1 mt-3">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="outline" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </CardHeader>
+            
+            <CardFooter className="flex items-center justify-between pt-0">
+              <div className="flex items-center gap-3">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                  <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-sm font-medium">{post.author.name}</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    {formatDate(post.publishedAt)}
+                    <Clock className="h-3 w-3 ml-2" />
+                    {post.readTime} min read
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  Edit
+                </Button>
+                <Button size="sm">
+                  View
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
+
+      {filteredPosts.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No posts found matching your criteria.</p>
+        </div>
+      )}
     </div>
   );
 }

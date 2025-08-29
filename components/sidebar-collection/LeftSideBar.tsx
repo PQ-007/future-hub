@@ -75,7 +75,6 @@ const data: SidebarData = {
       icon: SwatchBook,
       href: "/flashcard",
     },
-
     {
       title: "Store",
       icon: Store,
@@ -259,7 +258,6 @@ export function LeftSidebar({
               />
             </SidebarGroupContent>
           </SidebarGroup>
-         
         </SidebarContent>
       </Sidebar>
 

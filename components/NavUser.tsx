@@ -32,7 +32,6 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import ThemeToggleButton from "./ThemeToggleSwitch";
 import { Button } from "./ui/button";
 
 // Using a type alias for better clarity and potential future extension
@@ -128,11 +127,11 @@ export function NavUser({ user }: { user: User | null }) {
                 {user.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none truncate">
+            <div className="flex flex-col">
+              <p className="text-sm font-medium truncate">
                 {user.name}
               </p>
-              <p className="text-xs leading-none text-muted-foreground truncate">
+              <p className="text-xs text-muted-foreground truncate">
                 {user.email}
               </p>
             </div>
@@ -198,13 +197,7 @@ export function NavUser({ user }: { user: User | null }) {
             </CollapsibleContent>
           </Collapsible>
 
-          <DropdownMenuItem className="cursor-pointer flex justify-between items-center">
-            <div className="flex items-center">
-              <Wrench className="mr-2 h-4 w-4" />
-              <span>Theme</span>
-            </div>
-            <ThemeToggleButton />
-          </DropdownMenuItem>
+          
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem

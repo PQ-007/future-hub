@@ -732,7 +732,7 @@ export default function DashboardPage({ lang = "ENG" }: DashboardPageProps) {
           lang="mn-Mong"
           className="font-[Noto_Sans_Mongolian] [writing-mode:vertical-lr] [text-orientation:mixed] text-lg leading-snug text-muted-foreground"
         >
-          ᠮᠣᠩᠭᠣᠯ ᠮᠢᠨ᠎ᠡ ᠬᠡᠯᠡ
+          ᠶᠠᠭᠤ ᠴᠤ ᠣᠷᠤ ᠦᢉᠡᠢ ᠬᠣᠭᠤᠰᠤᠨ ᠠ᠋ᠴᠠ ᠡᢉᠦᠰᠳᠡᢉ ᠦᢉᠡᠢ᠂ ᠬᠤᠪᠢ ᠲᠠᠪᠢᠯᠠᠩ ᠵᠣᠷᠢᠭᠲᠤ ᠨᠢᢉᠡᠨ ᠢ᠋ ᠲᠡᠳᢈᠦᠳᠡᢉ᠃
         </p>
       </div>
     </div>

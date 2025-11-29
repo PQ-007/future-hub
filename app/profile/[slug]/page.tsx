@@ -1,5 +1,7 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,39 +10,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  User,
-  Mail,
-  MapPin,
-  Calendar,
-  Github,
-  Linkedin,
-  Twitter,
-  Globe,
-  Edit,
-  Save,
-  Camera,
-  Shield,
-  Bell,
-  Eye,
-  Settings,
   Award,
-  TrendingUp,
-  Clock,
-  Target,
-  BookOpen,
+  Bell,
+  Calendar,
+  Camera,
   Code,
+  Edit,
+  Eye,
+  Github,
+  Globe,
+  Linkedin,
+  MapPin,
+  Save,
+  Shield,
+  Target,
   Trophy,
-  Star,
-  Activity,
+  Twitter
 } from "lucide-react";
 import { useState } from "react";
 
@@ -219,32 +211,6 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold">Profile</h1>
-          <p className="text-muted-foreground mt-1">
-            Manage your account settings and preferences
-          </p>
-        </div>
-        <Button
-          onClick={() => (isEditing ? handleSaveProfile() : setIsEditing(true))}
-          className="flex items-center gap-2"
-        >
-          {isEditing ? (
-            <>
-              <Save className="h-4 w-4" />
-              Save Changes
-            </>
-          ) : (
-            <>
-              <Edit className="h-4 w-4" />
-              Edit Profile
-            </>
-          )}
-        </Button>
-      </div>
-
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="overview">Overview</TabsTrigger>

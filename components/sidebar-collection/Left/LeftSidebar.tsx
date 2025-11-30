@@ -112,16 +112,16 @@ const navData: SidebarData = {
     {
       titleKey: "sidebar.articles",
       icon: Telescope,
-      href: "/articles",
+      href: "/article",
       items: [
         {
           titleKey: "sidebar.internship",
-          href: "/articles/internship",
+          href: "/article/internship",
           icon: Library,
         },
         {
           titleKey: "sidebar.post-grad",
-          href: "/articles/post-grad",
+          href: "/article/post-grad",
           icon: Library,
         },
       ],
@@ -139,7 +139,7 @@ const navData: SidebarData = {
         },
         {
           titleKey: "sidebar.contest",
-          href: "/articles/contest",
+          href: "/project/contest",
           icon: Library,
         },
         {
@@ -239,6 +239,7 @@ const navData: SidebarData = {
 
 function Header() {
   const { setOpen, isMobile } = useSidebar();
+  const { t } = useTranslation();
   const router = useRouter();
 
   return (
@@ -251,14 +252,17 @@ function Header() {
                 if (isMobile) setOpen(false);
                 router.push("/");
               }}
-              className="flex w-full items-center gap-2 group"
+              className="flex w-full items-center group"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full shrink-0">
                 <Bird className="size-5 transition-all group-hover:scale-110 group-hover:rotate-12" />
               </div>
-              <div className="grid flex-1 text-left leading-tight min-w-0">
+              <div className="grid flex-1 text-left leading-tight min-w-0 h-9.5">
                 <span className="truncate text-xl font-semibold tracking-wider">
                   FutureHub
+                </span>
+                <span className="truncate text-xs font-light text-muted-foreground tracking-wider">
+                  Ad astra per aspera
                 </span>
               </div>
             </button>

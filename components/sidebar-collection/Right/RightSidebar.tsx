@@ -13,6 +13,7 @@ import {
   Users,
   Menu,
 } from "lucide-react";
+import { useTransition } from "react";
 
 interface RankingUser {
   rank: number;
@@ -36,6 +37,7 @@ interface RightSidebarProps {
 }
 
 export function RightSidebar({ topUsers, trendingTopics }: RightSidebarProps) {
+  const t = useTransition();
   const SidebarContent = () => (
     <div className="space-y-6">
       {/* Top Contributors */}
@@ -193,6 +195,7 @@ export function RightSidebar({ topUsers, trendingTopics }: RightSidebarProps) {
       </Card>
     </div>
   );
+
 
   return (
     <>

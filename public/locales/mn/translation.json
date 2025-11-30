@@ -14,7 +14,8 @@
     "create": "Үүсгэх",
     "back": "Буцах",
     "next": "Дараах",
-    "previous": "Өмнөх"
+    "previous": "Өмнөх",
+    "moto": "Суралц. Бүтээ. Хуваалц."
   },
   "sidebar": {
     "competitions": "Тэмцээн",
@@ -152,6 +153,16 @@
     "noAccount": "Та бүртгэлгүй юу?",
     "hasAccount": "Та бүртгэлтэй юу?",
     "continueWithGoogle": "Google-ээр үргэлжлүүлэх"
+  },
+   "ranking": {
+    "topContributors": "Шилдэг хэрэглэгчид",
+    "weeklyLeaders": "Энэ долоо хоногийн шилдгүүд",
+    "trendingTopics": "Тренд сэдвүүд",
+    "suggestedUsers": "Санал болгож буй хэрэглэгчид",
+    "viewAll": "Бүгдийг харах",
+    "posts": "Постууд",
+    "thisWeek": "Энэ долоо хоног",
+    "rank": "Ранк"
   },
   "landing": {
     "hero": {

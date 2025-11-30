@@ -14,7 +14,8 @@
     "create": "作成",
     "back": "戻る",
     "next": "次へ",
-    "previous": "前へ"
+    "previous": "前へ",
+    "moto": "学ぶ。作る。共有する。"
   },
   "sidebar": {
     "internship": "インターンシップ",
@@ -130,6 +131,16 @@
     "participants": "参加者",
     "prize": "賞品",
     "duration": "期間"
+  },
+   "ranking": {
+    "topContributors": "トップ貢献者",
+    "weeklyLeaders": "週間リーダー",
+    "trendingTopics": "トレンドトピック",
+    "suggestedUsers": "おすすめユーザー",
+    "viewAll": "すべて見る",
+    "posts": "投稿",
+    "thisWeek": "今週",
+    "rank": "Rank"
   },
   "profile": {
     "title": "プロフィール",

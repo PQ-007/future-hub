@@ -1,4 +1,5 @@
 "use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,42 +24,61 @@ import {
   ChevronUp,
   Globe,
   LogOut,
+  Monitor,
+  Moon,
   Omega,
   Pi,
   Route,
   Sigma,
-  UserRound
+  Sun,
+  UserRound,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
+import { Button } from "./ui/button"; 
 
-// Define languages structure for consistency
+// --- Shared Types and Constants ---
+
 const languages = [
   { code: "en", name: "English", icon: Omega },
-  { code: "mn", name: "Монгол", icon: Sigma }, // Sigma could be imported if needed
-  { code: "ja", name: "日本語", icon: Pi }, // Origami could be imported if needed
+  { code: "mn", name: "Монгол", icon: Sigma },
+  { code: "ja", name: "日本語", icon: Pi },
 ] as const;
 
-// Type alias for user data
 type User = {
   name: string;
   email: string;
   avatar: string;
 };
 
-// Memoized Supabase client
+// Theme options for the dropdown
+const themeOptions = [
+    { name: "Light", value: "light", icon: Sun },
+    { name: "Dark", value: "dark", icon: Moon },
+    { name: "System", value: "system", icon: Monitor },
+];
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 );
 
+// --- User Dropdown Component ---
+
 export function NavUser({ user }: { user: User | null }) {
   const router = useRouter();
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const { theme, setTheme, resolvedTheme, systemTheme } = useTheme();
+
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isThemeOpen, setIsThemeOpen] = useState(false);
+  
   const currentLanguage = languages.find((lang) => lang.code === language);
+  const currentThemeOption = themeOptions.find((t) => t.value === theme);
+  const CurrentThemeIcon = currentThemeOption?.icon || Monitor;
+
 
   const handleSignOut = async () => {
     try {
@@ -85,12 +105,20 @@ export function NavUser({ user }: { user: User | null }) {
     toast.success("Language Changed", {
       description: `Language set to ${selectedLang}.`,
     });
-    setIsLanguageOpen(false);
+    // Closing only the language collapsible, not the entire dropdown
   };
 
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+  };
+
+  // If no user is logged in, show a default profile button
   if (!user) {
     return (
-      <Button className="rounded-full data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+      <Button 
+        size="icon"
+        className="h-8 w-8 rounded-full data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+      >
         <Avatar className="h-8 w-8 rounded-full">
           <AvatarFallback className="rounded-full">
             <UserRound className="h-5 w-5" />
@@ -100,6 +128,7 @@ export function NavUser({ user }: { user: User | null }) {
     );
   }
 
+  // User is logged in, show the dropdown menu
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -120,6 +149,7 @@ export function NavUser({ user }: { user: User | null }) {
         align="end"
         forceMount
       >
+        {/* User Info Block */}
         <DropdownMenuLabel className="font-normal p-0">
           <div className="flex items-center gap-2 px-3 py-2">
             <Avatar className="h-9 w-9">
@@ -137,7 +167,9 @@ export function NavUser({ user }: { user: User | null }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
+          {/* Static Links */}
           <DropdownMenuItem
             onClick={() => router.push("/profile/user")}
             className="cursor-pointer"
@@ -156,6 +188,46 @@ export function NavUser({ user }: { user: User | null }) {
               <span>Roadmap</span>
             </div>
           </DropdownMenuItem>
+
+          {/* 🌟 COLLAPSIBLE - THEME SELECTION 🌟 */}
+          <Collapsible open={isThemeOpen} onOpenChange={setIsThemeOpen}>
+            <CollapsibleTrigger asChild>
+              <DropdownMenuItem
+                className="cursor-pointer flex items-center justify-between w-full"
+                onSelect={(e) => e.preventDefault()}
+              >
+                <div className="flex items-center">
+                  <CurrentThemeIcon className="mr-2 h-4 w-4" />
+                  <span>Theme ({currentThemeOption?.name || 'System'})</span>
+                </div>
+                {isThemeOpen ? (
+                  <ChevronUp className="ml-auto h-4 w-4 shrink-0" />
+                ) : (
+                  <ChevronDown className="ml-auto h-4 w-4 shrink-0" />
+                )}
+              </DropdownMenuItem>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="flex flex-col space-y-1 py-1 pl-8 pr-2">
+                {themeOptions.map((themeOption) => (
+                  <DropdownMenuItem
+                    key={themeOption.value}
+                    onClick={() => handleThemeChange(themeOption.value)}
+                    className="flex items-center justify-between cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <themeOption.icon className="h-4 w-4" />
+                      <span>{themeOption.name}</span>
+                    </div>
+                    {theme === themeOption.value && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+
+          {/* 🌟 COLLAPSIBLE - LANGUAGE SELECTION 🌟 */}
           <Collapsible open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
             <CollapsibleTrigger asChild>
               <DropdownMenuItem
@@ -192,6 +264,8 @@ export function NavUser({ user }: { user: User | null }) {
             </CollapsibleContent>
           </Collapsible>
         </DropdownMenuGroup>
+        
+        {/* Sign Out */}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleSignOut}
@@ -205,25 +279,4 @@ export function NavUser({ user }: { user: User | null }) {
   );
 }
 
-// Compact language switcher as a standalone export for reuse (e.g., mobile)
-export function LanguageSwitcherCompact() {
-  const { language, setLanguage } = useLanguage();
-  return (
-    <div className="flex items-center gap-1">
-      {languages.map((lang) => (
-        <button
-          key={lang.code}
-          onClick={() => setLanguage(lang.code as "en" | "mn" | "ja")}
-          className={cn(
-            "px-2 py-1 rounded-md text-sm font-medium transition-colors",
-            language === lang.code
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
-          )}
-        >
-          {lang.code.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
+

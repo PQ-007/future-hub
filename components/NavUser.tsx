@@ -1,5 +1,4 @@
 "use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -10,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,27 +22,33 @@ import {
   ChevronDown,
   ChevronUp,
   Globe,
-  Languages,
   LogOut,
-  Origami,
+  Omega,
+  Pi,
   Route,
   Sigma,
-  UserRound,
-  Wrench
+  UserRound
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 
-// Using a type alias for better clarity and potential future extension
+// Define languages structure for consistency
+const languages = [
+  { code: "en", name: "English", icon: Omega },
+  { code: "mn", name: "Монгол", icon: Sigma }, // Sigma could be imported if needed
+  { code: "ja", name: "日本語", icon: Pi }, // Origami could be imported if needed
+] as const;
+
+// Type alias for user data
 type User = {
   name: string;
   email: string;
   avatar: string;
 };
 
-// Memoizing Supabase client creation is a good practice to avoid re-initialization
+// Memoized Supabase client
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
@@ -49,13 +56,9 @@ const supabase = createClient(
 
 export function NavUser({ user }: { user: User | null }) {
   const router = useRouter();
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-
-  // Use a useEffect hook to handle side effects like checking environment variables
-  // This ensures the check runs only on the client-side after the component mounts
-  // and separates concerns from the component's render logic.
-  // ... (Original useEffect logic from the provided code) ...
+  const { language, setLanguage } = useLanguage();
+  const currentLanguage = languages.find((lang) => lang.code === language);
 
   const handleSignOut = async () => {
     try {
@@ -75,21 +78,19 @@ export function NavUser({ user }: { user: User | null }) {
     }
   };
 
-  const handleLanguageChange = (language: string) => {
-    setSelectedLanguage(language);
+  const handleLanguageChange = (code: "en" | "mn" | "ja") => {
+    setLanguage(code);
+    const selectedLang =
+      languages.find((lang) => lang.code === code)?.name || code;
     toast.success("Language Changed", {
-      description: `Language set to ${language}.`,
+      description: `Language set to ${selectedLang}.`,
     });
-    setIsLanguageOpen(false); // Close collapsible after selection
+    setIsLanguageOpen(false);
   };
 
   if (!user) {
     return (
-      <Button
-        className={
-          "rounded-full data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        }
-      >
+      <Button className="rounded-full data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
         <Avatar className="h-8 w-8 rounded-full">
           <AvatarFallback className="rounded-full">
             <UserRound className="h-5 w-5" />
@@ -115,7 +116,7 @@ export function NavUser({ user }: { user: User | null }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="min-w-56"
-        side={"bottom"}
+        side="bottom"
         align="end"
         forceMount
       >
@@ -128,9 +129,7 @@ export function NavUser({ user }: { user: User | null }) {
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <p className="text-sm font-medium truncate">
-                {user.name}
-              </p>
+              <p className="text-sm font-medium truncate">{user.name}</p>
               <p className="text-xs text-muted-foreground truncate">
                 {user.email}
               </p>
@@ -138,12 +137,12 @@ export function NavUser({ user }: { user: User | null }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup >
+        <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => router.push("/profile/user")}
             className="cursor-pointer"
           >
-            <div className="flex ">
+            <div className="flex">
               <UserRound className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </div>
@@ -152,22 +151,20 @@ export function NavUser({ user }: { user: User | null }) {
             onClick={() => router.push("/roadmap")}
             className="cursor-pointer"
           >
-            <div className="flex ">
+            <div className="flex">
               <Route className="mr-2 h-4 w-4" />
               <span>Roadmap</span>
             </div>
           </DropdownMenuItem>
-
-
           <Collapsible open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
             <CollapsibleTrigger asChild>
               <DropdownMenuItem
                 className="cursor-pointer flex items-center justify-between w-full"
-                onSelect={(e) => e.preventDefault()} 
+                onSelect={(e) => e.preventDefault()}
               >
                 <div className="flex items-center">
-                  <Languages className="mr-2 h-4 w-4" />
-                  <span>Language ({selectedLanguage})</span>
+                  <Globe className="mr-2 h-4 w-4" />
+                  <span>Language ({currentLanguage?.name || "English"})</span>
                 </div>
                 {isLanguageOpen ? (
                   <ChevronUp className="ml-auto h-4 w-4 shrink-0" />
@@ -178,26 +175,22 @@ export function NavUser({ user }: { user: User | null }) {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="flex flex-col space-y-1 py-1 pl-8 pr-2">
-                {["English", "Монгол", "日本語"].map((lang) => (
+                {languages.map((lang) => (
                   <DropdownMenuItem
-                    key={lang}
-                    onClick={() => handleLanguageChange(lang)}
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
                     className="flex items-center justify-between cursor-pointer"
                   >
                     <div className="flex items-center gap-2">
-                      {lang === "English" && <Globe className="h-4 w-4" />}
-                      {lang === "Монгол" && <Sigma className="h-4 w-4" />}
-                      {lang === "日本語" && <Origami className="h-4 w-4" />}
-                      <span>{lang}</span>
+                      <lang.icon className="h-4 w-4" />
+                      <span>{lang.name}</span>
                     </div>
-                    {selectedLanguage === lang && <Check className="h-4 w-4" />}
+                    {language === lang.code && <Check className="h-4 w-4" />}
                   </DropdownMenuItem>
                 ))}
               </div>
             </CollapsibleContent>
           </Collapsible>
-
-          
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -209,5 +202,28 @@ export function NavUser({ user }: { user: User | null }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+// Compact language switcher as a standalone export for reuse (e.g., mobile)
+export function LanguageSwitcherCompact() {
+  const { language, setLanguage } = useLanguage();
+  return (
+    <div className="flex items-center gap-1">
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => setLanguage(lang.code as "en" | "mn" | "ja")}
+          className={cn(
+            "px-2 py-1 rounded-md text-sm font-medium transition-colors",
+            language === lang.code
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+          )}
+        >
+          {lang.code.toUpperCase()}
+        </button>
+      ))}
+    </div>
   );
 }

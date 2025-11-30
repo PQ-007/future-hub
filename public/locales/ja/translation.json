@@ -1,6 +1,222 @@
 {
-  "welcome": "フューチャーハブへようこそ",
-  "about": "自己紹介",
-  "projects": "プロジェクト",
-  "blog": "ブログ"
+  "common": {
+    "welcome": "FutureHubへようこそ",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "view": "表示",
+    "share": "共有",
+    "search": "検索",
+    "filter": "フィルター",
+    "create": "作成",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ"
+  },
+  "sidebar": {
+    "internship": "インターンシップ",
+    "post-grad" : "卒業後の生活",
+    "contest": "コンテスト",
+    "competitions": "コンペティション",
+    "learn": "学習",
+    "articles": "記事",
+    "discussions": "ディスカッション",
+    "projects": "プロジェクト",
+    "knowledgeTree": "知識ツリー",
+    "dictionary": "辞書",
+    "store": "ストア",
+    "ongoing": "進行中",
+    "upcoming": "近日開催",
+    "past": "過去",
+    "algorithm": "アルゴリズム",
+    "dataStructures": "データ構造",
+    "languages": "言語",
+    "resources": "リソース",
+    "graduation": "卒業",
+    "tutorial": "チュートリアル",
+    "myProjects": "マイプロジェクト",
+    "myArticles": "マイ記事",
+    "myFlashcards": "マイフラッシュカード",
+    "webDev": "Web開発",
+    "mobileDev": "モバイル開発",
+    "aiMl": "AI・機械学習",
+    "techArticles": "技術記事",
+    "tutorials": "チュートリアル",
+    "reviews": "レビュー",
+    "algorithms": "アルゴリズム",
+    "dataScience": "データサイエンス",
+    "webDesign": "Webデザイン",
+    "more": "その他",
+    "viewItem": "アイテムを表示",
+    "editItem": "アイテムを編集",
+    "shareItem": "アイテムを共有",
+    "deleteItem": "アイテムを削除",
+    "deleteConfirm": "削除",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "notifications": "通知",
+    "upgrade": "プランをアップグレード",
+    "logout": "ログアウト"
+  },
+  "dashboard": {
+    "welcomeBack": "お帰りなさい、{{name}}さん！",
+    "overview": "概要",
+    "quickActions": "クイックアクション",
+    "newProject": "新しいプロジェクト",
+    "newBlog": "新しいブログ",
+    "createFlashcards": "フラッシュカード作成",
+    "joinContest": "コンテスト参加",
+    "recentActivity": "最近のアクティビティ",
+    "achievements": "実績",
+    "learningProgress": "学習進捗",
+    "learningStreak": "学習継続日数",
+    "weeklyGoal": "週間目標",
+    "days": "日",
+    "completion": "完了率",
+    "totalProjects": "総プロジェクト数",
+    "blogPosts": "ブログ投稿数",
+    "activeContests": "アクティブコンテスト",
+    "studyCards": "学習カード",
+    "myProjects": "マイプロジェクト",
+    "myBlogs": "マイブログ",
+    "publishedOn": "公開日",
+    "views": "ビュー",
+    "likes": "いいね",
+    "comments": "コメント"
+  },
+  "projects": {
+    "title": "プロジェクト",
+    "description": "プロジェクトを管理・公開",
+    "newProject": "新しいプロジェクト",
+    "status": "ステータス",
+    "draft": "下書き",
+    "published": "公開済み",
+    "inProgress": "進行中",
+    "completed": "完了",
+    "technologies": "技術",
+    "contributors": "貢献者",
+    "lastUpdated": "最終更新"
+  },
+  "blogs": {
+    "title": "ブログ投稿",
+    "description": "知識と洞察を共有",
+    "newPost": "新しい投稿",
+    "readTime": "分で読む",
+    "author": "著者",
+    "category": "カテゴリー",
+    "tags": "タグ"
+  },
+  "flashcards": {
+    "title": "フラッシュカード",
+    "description": "間隔反復で学習",
+    "createDeck": "デッキ作成",
+    "studyNow": "今すぐ学習",
+    "cardsStudied": "学習したカード",
+    "accuracy": "正答率",
+    "mastery": "習得度",
+    "deck": "デッキ",
+    "decks": "デッキ"
+  },
+  "competitions": {
+    "title": "コンテスト",
+    "description": "コーディングコンテストに参加",
+    "upcoming": "予定",
+    "active": "進行中",
+    "completed": "完了",
+    "register": "登録",
+    "participants": "参加者",
+    "prize": "賞品",
+    "duration": "期間"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "bio": "自己紹介",
+    "skills": "スキル",
+    "interests": "興味",
+    "achievements": "実績",
+    "following": "フォロー中",
+    "followers": "フォロワー",
+    "joinedDate": "参加日",
+    "editProfile": "プロフィール編集",
+    "signOut": "サインアウト"
+  },
+  "auth": {
+    "signIn": "サインイン",
+    "signUp": "サインアップ",
+    "signOut": "サインアウト",
+    "email": "メール",
+    "password": "パスワード",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "すでにアカウントをお持ちですか？",
+    "continueWithGoogle": "Googleで続行"
+  },
+  "landing": {
+    "hero": {
+      "title": "未来をつくる場所",
+      "subtitle": "FutureHub — 革新し、研究し、開発し、そしてさらに",
+      "searchPlaceholder": "プロジェクト、ブログ、またはコンテストを検索..."
+    },
+    "cta": {
+      "title": "今すぐFutureHubポートフォリオを始める",
+      "subtitle": "プロジェクトを紹介し、チュートリアルを公開し、単語を自動的に学習用フラッシュカードに変換。",
+      "getStarted": "始める",
+      "learnMore": "詳細"
+    },
+    "stats": {
+      "projects": "プロジェクト",
+      "blogPosts": "ブログ投稿",
+      "activeUsers": "アクティブユーザー",
+      "contests": "コンテスト"
+    },
+    "features": {
+      "title": "主要な機能",
+      "items": [
+        { "title": "プロジェクトを公開", "desc": "革新的なプロジェクトを世界に披露。" },
+        { "title": "フラッシュカードを生成", "desc": "任意のテキストから自動的に学習補助を作成。" },
+        { "title": "コンテストを開催", "desc": "エキサイトする競技を組織化し、参加する。" },
+        { "title": "ブログを書く", "desc": "魅力的な記事を通じて知識を共有。" },
+        { "title": "多言語サポート", "desc": "複数の言語でプラットフォームにアクセス。" },
+        { "title": "コミュニティインタラクション", "desc": "仲間と協力し、フィードバックを得る。" }
+      ]
+    },
+    "projects": {
+      "title": "注目のプロジェクト",
+      "seeAll": "すべて見る",
+      "open": "開く",
+      "demo": "デモ"
+    },
+    "blogs": {
+      "title": "最近のブログ",
+      "seeAll": "すべて見る",
+      "readMore": "読む",
+      "items": [
+        { "title": "AI教育の未来", "desc": "AIが学習を革命化する方法を探る。" },
+        { "title": "スケーラブルなウェブアプリの構築", "desc": "現代の開発のためのヒントとコツ。" },
+        { "title": "データ構造の習得", "desc": "プログラマーにとって必須の概念。" }
+      ]
+    },
+    "activity": {
+      "title": "最近のアクティビティ",
+      "viewAll": "すべて見る",
+      "items": [
+        { "date": "Aug 10, 2025", "action": "コンテストに勝利：サマーハッカソン", "details": "AlgoRushを提出し、1位を獲得。" },
+        { "date": "Aug 5, 2025", "action": "公開：自動タイムラインの構築方法", "details": "記事から10枚のフラッシュカードを追加" },
+        { "date": "Aug 1, 2025", "action": "ブログを公開：日常生活におけるAI", "details": "AIトピックに関する15枚のフラッシュカードを生成。" },
+        { "date": "Jul 28, 2025", "action": "開始：AlgoRushプロトタイプ", "details": "プロジェクトのデモをコンテストシステムに接続" },
+        { "date": "Jul 15, 2025", "action": "Super Portfolioで協力", "details": "多言語サポートを追加。" }
+      ]
+    },
+    "projectsList": [
+      { "title": "AlgoRush", "desc": "グラフアルゴリズムのビジュアライザーゲーム" },
+      { "title": "Super Portfolio", "desc": "多言語学生ポートフォリオ" },
+      { "title": "FlashCard Sync", "desc": "オーディオ駆動のレビューとOCRインポート" },
+      { "title": "AI Tutor", "desc": "MLを使用したインテリジェントなチューリングシステム。" },
+      { "title": "EcoTracker", "desc": "環境影響を追跡するためのアプリ。" },
+      { "title": "CodeCollab", "desc": "リアルタイムの共同コーディングプラットフォーム。" }
+    ]
+  }
 }

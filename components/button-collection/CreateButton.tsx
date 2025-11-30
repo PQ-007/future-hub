@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,26 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import {
-  Plus,
-  FileText,
-  Image,
-  Video,
-  Folder,
-  Users,
-  Calendar,
-  Code,
-  MessageSquare,
-  Presentation,
-  Database,
-  Layout,
   ChevronDown,
-  Zap,
+  Code,
+  FileText,
+  MessageSquare,
+  Plus,
   SwatchBook,
   Trophy,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 const CreateButton = () => {
   const router = useRouter();
@@ -87,14 +77,13 @@ const CreateButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
+          variant="ghost"
+          size="icon"
           className={cn(
-            "gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90",
-            "transition-all duration-200 hover:shadow-md"
+            "size-7 hover:bg-accent hover:text-accent-foreground transition-colors"
           )}
         >
           <Plus className="h-4 w-4" />
-          Create
-          <ChevronDown className="h-3 w-3 opacity-70" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

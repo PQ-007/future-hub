@@ -1,6 +1,282 @@
 {
-  "welcome": "Welcome to FutureHub",
-  "about": "About Me",
-  "projects": "Projects",
-  "blog": "Blog"
+  "common": {
+    "welcome": "Welcome to FutureHub",
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "share": "Share",
+    "search": "Search",
+    "filter": "Filter",
+    "create": "Create",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+    
+  },
+
+  "sidebar": {
+
+    "internship": "Internship",
+    "post-grad" : "Post-Grad-Life",
+    "contest": "Contest",
+    "competitions": "Competitions",
+    "learn": "Learn",
+    "articles": "Articles",
+    "discussions": "Discussions",
+    "projects": "Projects",
+    "knowledgeTree": "Knowledge Tree",
+    "dictionary": "Dictionary",
+    "store": "Store",
+    "ongoing": "Ongoing",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "algorithm": "Algorithm",
+    "dataStructures": "Data Structures",
+    "languages": "Languages",
+    "resources": "Resources",
+    "graduation": "Graduation",
+    "tutorial": "Tutorial",
+    "myProjects": "My Projects",
+    "myArticles": "My Articles",
+    "myFlashcards": "My Flashcards",
+    "webDev": "Web Development",
+    "mobileDev": "Mobile Development",
+    "aiMl": "AI & ML",
+    "techArticles": "Tech Articles",
+    "tutorials": "Tutorials",
+    "reviews": "Reviews",
+    "algorithms": "Algorithms",
+    "dataScience": "Data Science",
+    "webDesign": "Web Design",
+    "more": "More",
+    "viewItem": "View Item",
+    "editItem": "Edit Item",
+    "shareItem": "Share Item",
+    "deleteItem": "Delete Item",
+    "deleteConfirm": "Delete",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "upgrade": "Upgrade Plan",
+    "logout": "Log Out"
+  },
+
+  "navigation": {
+    "dashboard": "Dashboard",
+    "competitions": "Competitions",
+    "learn": "Learn",
+    "blogs": "Blogs",
+    "projects": "Projects",
+    "flashcards": "Flashcards",
+    "store": "Store",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "welcomeBack": "Welcome back, {{name}}!",
+    "overview": "Overview",
+    "quickActions": "Quick Actions",
+    "newProject": "New Project",
+    "newBlog": "New Blog Post",
+    "createFlashcards": "Create Flashcards",
+    "joinContest": "Join Contest",
+    "recentActivity": "Recent Activity",
+    "achievements": "Recent Achievements",
+    "learningProgress": "Learning Progress",
+    "learningStreak": "Learning Streak",
+    "weeklyGoal": "Weekly Goal",
+    "days": "days",
+    "completion": "completion",
+    "totalProjects": "Total Projects",
+    "blogPosts": "Blog Posts",
+    "activeContests": "Active Contests",
+    "studyCards": "Study Cards",
+    "myProjects": "My Projects",
+    "myBlogs": "My Blog Posts",
+    "publishedOn": "Published on",
+    "views": "views",
+    "likes": "likes",
+    "comments": "comments"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Manage and showcase your projects",
+    "newProject": "New Project",
+    "status": "Status",
+    "draft": "Draft",
+    "published": "Published",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "technologies": "Technologies",
+    "contributors": "Contributors",
+    "lastUpdated": "Last Updated"
+  },
+  "blogs": {
+    "title": "Blog Posts",
+    "description": "Share knowledge and insights",
+    "newPost": "New Post",
+    "readTime": "min read",
+    "author": "Author",
+    "category": "Category",
+    "tags": "Tags"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "description": "Study with spaced repetition",
+    "createDeck": "Create Deck",
+    "studyNow": "Study Now",
+    "cardsStudied": "Cards Studied",
+    "accuracy": "Accuracy",
+    "mastery": "Mastery",
+    "deck": "Deck",
+    "decks": "Decks"
+  },
+  "competitions": {
+    "title": "Competitions",
+    "description": "Participate in coding contests",
+    "upcoming": "Upcoming",
+    "active": "Active",
+    "completed": "Completed",
+    "register": "Register",
+    "participants": "Participants",
+    "prize": "Prize",
+    "duration": "Duration"
+  },
+  "profile": {
+    "title": "Profile",
+    "bio": "Bio",
+    "skills": "Skills",
+    "interests": "Interests",
+    "achievements": "Achievements",
+    "following": "Following",
+    "followers": "Followers",
+    "joinedDate": "Joined",
+    "editProfile": "Edit Profile",
+    "signOut": "Sign Out"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "continueWithGoogle": "Continue with Google"
+  },
+
+  "feed": {
+    "title": "Your Feed",
+    "description": "Stay updated with the latest from your community",
+    "tabs": {
+      "all": "All",
+      "projects": "Projects",
+      "blogs": "Blogs",
+      "contests": "Contests",
+      "following": "Following"
+    },
+    "actions": {
+      "like": "Like",
+      "comment": "Comment",
+      "share": "Share",
+      "bookmark": "Bookmark",
+      "follow": "Follow",
+      "following": "Following"
+    },
+    "stats": {
+      "views": "views",
+      "likes": "likes",
+      "comments": "comments",
+      "shares": "shares",
+      "points": "pts"
+    },
+    "types": {
+      "project": "Project",
+      "blog": "Blog",
+      "contest": "Contest",
+      "flashcard": "Flashcard",
+      "achievement": "Achievement"
+    }
+  },
+  "ranking": {
+    "topContributors": "Top Contributors",
+    "weeklyLeaders": "This Week's Leaders",
+    "trendingTopics": "Trending Topics",
+    "suggestedUsers": "Suggested for You",
+    "viewAll": "View All",
+    "posts": "posts",
+    "thisWeek": "this week",
+    "rank": "Rank"
+  },
+  "landing": {
+    "hero": {
+      "title": "Build your future",
+      "subtitle": "FutureHub is a platform to publish projects, generate flashcards from text, and host contests.",
+      "searchPlaceholder": "Search projects, blogs, or contests..."
+    },
+    "cta": {
+      "title": "Start your FutureHub portfolio today",
+      "subtitle": "Showcase your projects, publish tutorials, and convert words into study flashcards automatically.",
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    },
+    "stats": {
+      "projects": "Projects",
+      "blogPosts": "Blog Posts",
+      "activeUsers": "Active Users",
+      "contests": "Contests"
+    },
+    "features": {
+      "title": "Key Features",
+      "items": [
+        { "title": "Publish Projects", "desc": "Showcase your innovative projects to the world." },
+        { "title": "Generate Flashcards", "desc": "Automatically create study aids from any text." },
+        { "title": "Host Contests", "desc": "Organize and participate in exciting competitions." },
+        { "title": "Write Blogs", "desc": "Share your knowledge through engaging articles." },
+        { "title": "Multilingual Support", "desc": "Access the platform in multiple languages." },
+        { "title": "Community Interaction", "desc": "Collaborate and get feedback from peers." }
+      ]
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "seeAll": "See all",
+      "open": "Open",
+      "demo": "Demo"
+    },
+    "blogs": {
+      "title": "Recent Blogs",
+      "seeAll": "See all",
+      "readMore": "Read More",
+      "items": [
+        { "title": "The Future of AI in Education", "desc": "Exploring how AI can revolutionize learning." },
+        { "title": "Building Scalable Web Apps", "desc": "Tips and tricks for modern development." },
+        { "title": "Mastering Data Structures", "desc": "Essential concepts for programmers." }
+      ]
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "viewAll": "View all",
+      "items": [
+        { "date": "Aug 10, 2025", "action": "Won contest: Summer Hackathon", "details": "Submitted AlgoRush and won first place." },
+        { "date": "Aug 5, 2025", "action": "Published: How I built an automatic timeline", "details": "Added 10 flashcards from the article" },
+        { "date": "Aug 1, 2025", "action": "Published blog: AI in Everyday Life", "details": "Generated 15 flashcards on AI topics." },
+        { "date": "Jul 28, 2025", "action": "Started: AlgoRush prototype", "details": "Connected project demo to contest system" },
+        { "date": "Jul 15, 2025", "action": "Collaborated on Super Portfolio", "details": "Added multilingual support." }
+      ]
+    },
+    "projectsList": [
+      { "title": "AlgoRush", "desc": "Graph-algorithm visualizer game." },
+      { "title": "Super Portfolio", "desc": "Multilingual student portfolios." },
+      { "title": "FlashCard Sync", "desc": "Audio-driven review and OCR import." },
+      { "title": "AI Tutor", "desc": "Intelligent tutoring system using ML." },
+      { "title": "EcoTracker", "desc": "App for tracking environmental impact." },
+      { "title": "CodeCollab", "desc": "Real-time collaborative coding platform." }
+    ]
+  }
+  
 }

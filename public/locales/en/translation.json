@@ -19,9 +19,8 @@
   },
 
   "sidebar": {
-
     "internship": "Internship",
-    "post-grad" : "Post-Grad-Life",
+    "post-grad": "Post-Grad-Life",
     "contest": "Contest",
     "competitions": "Competitions",
     "learn": "Learn",
@@ -213,70 +212,52 @@
     "thisWeek": "this week",
     "rank": "Rank"
   },
+
   "landing": {
     "hero": {
-      "title": "Build your future",
-      "subtitle": "FutureHub is a platform to publish projects, generate flashcards from text, and host contests.",
-      "searchPlaceholder": "Search projects, blogs, or contests..."
+      "title": "A place to learn and create",
+      "subtitle": "FutureHub — A practical platform for Kosen Computer science students",
+      "searchPlaceholder": "Search projects, articles, contests..."
     },
     "cta": {
-      "title": "Start your FutureHub portfolio today",
-      "subtitle": "Showcase your projects, publish tutorials, and convert words into study flashcards automatically.",
-      "getStarted": "Get Started",
-      "learnMore": "Learn More"
+      "title": "Use FutureHub",
+      "subtitle": "Learn from others and grow together.",
+      "getStarted": "Get Started"
     },
     "stats": {
       "projects": "Projects",
-      "blogPosts": "Blog Posts",
-      "activeUsers": "Active Users",
+      "articles": "Articles",
+      "discussions": "Q&A",
       "contests": "Contests"
     },
     "features": {
       "title": "Key Features",
       "items": [
-        { "title": "Publish Projects", "desc": "Showcase your innovative projects to the world." },
-        { "title": "Generate Flashcards", "desc": "Automatically create study aids from any text." },
-        { "title": "Host Contests", "desc": "Organize and participate in exciting competitions." },
-        { "title": "Write Blogs", "desc": "Share your knowledge through engaging articles." },
-        { "title": "Multilingual Support", "desc": "Access the platform in multiple languages." },
-        { "title": "Community Interaction", "desc": "Collaborate and get feedback from peers." }
+        {
+          "title": "Showcase Your Projects",
+          "desc": "Browse plans, graduation works, and tutorial projects."
+        },
+        {
+          "title": "Create Flashcards",
+          "desc": "Automatically extract useful words from text on the site."
+        },
+        {
+          "title": "Join Contests",
+          "desc": "Participate in department-hosted competitions."
+        },
+        {
+          "title": "Articles",
+          "desc": "Share your knowledge and experiences, and learn from others."
+        },
+        {
+          "title": "Multilingual Support",
+          "desc": "Use the platform in Mongolian, Japanese, or English."
+        },
+        {
+          "title": "Technical Dictionary",
+          "desc": "A dictionary with Mongolian translations tailored for your field."
+        }
       ]
-    },
-    "projects": {
-      "title": "Featured Projects",
-      "seeAll": "See all",
-      "open": "Open",
-      "demo": "Demo"
-    },
-    "blogs": {
-      "title": "Recent Blogs",
-      "seeAll": "See all",
-      "readMore": "Read More",
-      "items": [
-        { "title": "The Future of AI in Education", "desc": "Exploring how AI can revolutionize learning." },
-        { "title": "Building Scalable Web Apps", "desc": "Tips and tricks for modern development." },
-        { "title": "Mastering Data Structures", "desc": "Essential concepts for programmers." }
-      ]
-    },
-    "activity": {
-      "title": "Recent Activity",
-      "viewAll": "View all",
-      "items": [
-        { "date": "Aug 10, 2025", "action": "Won contest: Summer Hackathon", "details": "Submitted AlgoRush and won first place." },
-        { "date": "Aug 5, 2025", "action": "Published: How I built an automatic timeline", "details": "Added 10 flashcards from the article" },
-        { "date": "Aug 1, 2025", "action": "Published blog: AI in Everyday Life", "details": "Generated 15 flashcards on AI topics." },
-        { "date": "Jul 28, 2025", "action": "Started: AlgoRush prototype", "details": "Connected project demo to contest system" },
-        { "date": "Jul 15, 2025", "action": "Collaborated on Super Portfolio", "details": "Added multilingual support." }
-      ]
-    },
-    "projectsList": [
-      { "title": "AlgoRush", "desc": "Graph-algorithm visualizer game." },
-      { "title": "Super Portfolio", "desc": "Multilingual student portfolios." },
-      { "title": "FlashCard Sync", "desc": "Audio-driven review and OCR import." },
-      { "title": "AI Tutor", "desc": "Intelligent tutoring system using ML." },
-      { "title": "EcoTracker", "desc": "App for tracking environmental impact." },
-      { "title": "CodeCollab", "desc": "Real-time collaborative coding platform." }
-    ]
+    }
   }
-  
 }

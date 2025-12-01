@@ -12,6 +12,7 @@ import {
   PenTool,
   Languages,
   Users,
+  MessagesSquare,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -30,22 +31,22 @@ export default function LandingPage() {
   const statsData = [
     {
       label: t("landing.stats.projects"),
-      value: "1,245",
+      value: "21",
       icon: <Globe className="h-5 w-5 text-primary" />,
     },
     {
-      label: t("landing.stats.blogPosts"),
-      value: "532",
+      label: t("landing.stats.articles"),
+      value: "52",
       icon: <Star className="h-5 w-5 text-primary" />,
     },
     {
-      label: t("landing.stats.activeUsers"),
-      value: "4,392",
-      icon: <Globe className="h-5 w-5 text-primary" />,
+      label: t("landing.stats.discussions"),
+      value: "89",
+      icon: <MessagesSquare className="h-5 w-5 text-primary" />,
     },
     {
       label: t("landing.stats.contests"),
-      value: "27",
+      value: "6",
       icon: <Star className="h-5 w-5 text-primary" />,
     },
   ];
@@ -72,9 +73,7 @@ export default function LandingPage() {
     details: t(`landing.activity.items.${idx}.details`),
   }));
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
+ 
 
   return (
     <div className="min-h-screen bg-background">
@@ -151,110 +150,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Featured Projects */}
-        <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">
-              {t("landing.projects.title")}
-            </h2>
-            <Button
-              variant="link"
-              className="px-0 text-primary hover:underline"
-            >
-              {t("landing.projects.seeAll")}{" "}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {projectsData.map((p, idx) => (
-              <div
-                key={idx}
-                className="p-4 bg-card rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
-              >
-                <img
-                  src={`https://via.placeholder.com/300x150?text=${encodeURIComponent(
-                    p.title
-                  )}`}
-                  alt={p.title}
-                  className="w-full h-32 object-cover rounded-lg mb-3"
-                />
-                <h3 className="text-lg font-semibold">{p.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
-                <div className="mt-3 flex gap-2">
-                  <Button
-                    size="sm"
-                    className="bg-primary text-primary-foreground"
-                  >
-                    {t("landing.projects.open")}
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    {t("landing.projects.demo")}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Recent Blogs */}
-        <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">
-              {t("landing.blogs.title")}
-            </h2>
-            <Button
-              variant="link"
-              className="px-0 text-primary hover:underline"
-            >
-              {t("landing.blogs.seeAll")}{" "}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {blogsData.map((b, idx) => (
-              <div
-                key={idx}
-                className="p-4 bg-card rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
-              >
-                <h3 className="text-lg font-semibold">{b.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{b.desc}</p>
-                <div className="mt-3">
-                  <Button size="sm" variant="outline">
-                    {t("landing.blogs.readMore")}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Activity Feed */}
-        <section>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">
-              {t("landing.activity.title")}
-            </h2>
-            <Button
-              variant="link"
-              className="px-0 text-primary hover:underline"
-            >
-              {t("landing.activity.viewAll")}{" "}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-          <div className="space-y-4">
-            {activityData.map((a, idx) => (
-              <div
-                key={idx}
-                className="p-4 bg-card rounded-lg shadow-sm hover:shadow-md transition"
-              >
-                <div className="text-sm text-muted-foreground">{a.date}</div>
-                <div className="mt-1 text-base font-medium">{a.action}</div>
-                <div className="text-sm text-muted-foreground">{a.details}</div>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* CTA */}
         <section className="bg-primary/10 p-8 rounded-2xl text-center shadow-lg">
@@ -268,9 +163,6 @@ export default function LandingPage() {
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {t("landing.cta.getStarted")}
-            </Button>
-            <Button size="lg" variant="outline" className="hover:bg-muted">
-              {t("landing.cta.learnMore")}
             </Button>
           </div>
         </section>

@@ -21,7 +21,7 @@ import {
   TrendingUp,
   Trophy,
   X,
-  Zap
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -29,7 +29,7 @@ import { useState } from "react";
 
 export default function FeedPage() {
   const { t } = useLanguage();
-  const {user, loading} = useAuth();
+  const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState("all");
   const [likedItems, setLikedItems] = useState(new Set(["2", "4"]));
   const [bookmarkedItems, setBookmarkedItems] = useState(
@@ -197,36 +197,36 @@ export default function FeedPage() {
   const leaderboard = [
     {
       rank: 1,
-      name: "Alexandra Chen",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alexandra",
+      name: "Билгүүнтүшиг",
+      avatar: "https://robohash.org/Alexandra",
       points: 12450,
       change: 0,
     },
     {
       rank: 2,
-      name: "David Park",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
+      name: "Батсуурь",
+      avatar: "https://robohash.org/David",
       points: 11230,
       change: 2,
     },
     {
       rank: 3,
-      name: "Sarah Johnson",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahJ",
+      name: "З.Дөлгөөн",
+      avatar: "https://robohash.org/SarahJ",
       points: 10890,
       change: -1,
     },
     {
       rank: 4,
-      name: "Mike Zhang",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MikeZ",
+      name: "Цэлмэг",
+      avatar: "https://robohash.org/MikeZ",
       points: 9560,
       change: 1,
     },
     {
       rank: 5,
-      name: "Emily Rodriguez",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
+      name: "Төгөлдөр",
+      avatar: "https://robohash.org/Emily",
       points: 8920,
       change: -2,
     },
@@ -294,7 +294,7 @@ export default function FeedPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-center md:text-left">
               <h2 className="text-xl font-bold text-foreground">
-                 {t("common.welcome")} + {user?.id}
+                {t("common.welcome")} 
               </h2>
               <p className="text-sm text-muted-foreground">
                 {t("common.moto")}
@@ -302,7 +302,6 @@ export default function FeedPage() {
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Sparkles className="h-4 w-4" />
-              
             </div>
           </div>
         </div>
@@ -540,12 +539,11 @@ export default function FeedPage() {
           </div>
           {/* Right Sidebar (Remains Unchanged) */}
           <aside className="hidden xl:block w-[320px] space-y-6 sticky top-8 h-fit">
-            
             {/* Leaderboard */}
             <div>
               <h3 className="text-sm font-semibold tracking-tight flex items-center gap-2 mb-3">
                 <Trophy className="h-4 w-4" />
-              {  t("ranking.topContributors")}
+                {t("ranking.topContributors")}
               </h3>
               {/* ... Leaderboard rendering logic ... */}
               <Card className="border-border/40">
@@ -593,7 +591,7 @@ export default function FeedPage() {
             <div>
               <h3 className="text-sm font-semibold tracking-tight flex items-center gap-2 mb-3">
                 <TrendingUp className="h-4 w-4" />
-               {  t("ranking.trendingTopics")}
+                {t("ranking.trendingTopics")}
               </h3>
               {/* ... Trending Topics rendering logic ... */}
               <Card className="border-border/40">

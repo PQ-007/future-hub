@@ -3,6 +3,7 @@
 import BackToTopButton from "@/app/project/components/BackToTopButton";
 import FloatingActionBar from "@/app/project/components/FloatingActionBar";
 import ProjectComments from "@/app/project/components/ProjectComments";
+import ProjectMediaViewer from "./ProjectMediaViewer";
 import type {
   ProjectComment,
   ProjectDifficulty,
@@ -24,7 +25,6 @@ import {
   Heart,
   MessageSquare,
   Pencil,
-  Play,
   Share2,
   Users,
 } from "lucide-react";
@@ -500,112 +500,16 @@ export default function ProjectDetailPage() {
           </h1>
 
           {/* ── Steam-style media viewer ── */}
-          <div className="space-y-2">
-            {/* Main viewer */}
-            <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden border border-border bg-muted/30 shadow-[0_22px_40px_rgba(0,0,0,0.2)]">
-              {selectedMediaId === "youtube" && youTubeId ? (
-                <iframe
-                  src={`https://www.youtube.com/embed/${youTubeId}?autoplay=1`}
-                  title="Project video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              ) : activeGalleryUrl ? (
-                <img
-                  src={activeGalleryUrl}
-                  alt="Screenshot"
-                  className="w-full h-full object-cover"
-                />
-              ) : project.thumbnail_url ? (
-                <img
-                  src={project.thumbnail_url}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30">
-                  <span className="text-sm">
-                    {t("project.noPreview") || "No preview available"}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Horizontal strip */}
-            {hasStrip && (
-              <div
-                className="flex gap-2 overflow-x-auto pb-1"
-                style={{ scrollSnapType: "x mandatory" }}
-              >
-                {/* YouTube card */}
-                {youTubeId && (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedMediaId("youtube")}
-                    style={{ scrollSnapAlign: "start" }}
-                    className={`relative flex-shrink-0 w-32 aspect-video rounded-sm overflow-hidden border-2 transition-all ${
-                      selectedMediaId === "youtube"
-                        ? "border-primary shadow-[0_0_0_1px_hsl(var(--primary)/0.4)]"
-                        : "border-border/50 hover:border-border"
-                    }`}
-                  >
-                    <img
-                      src={`https://img.youtube.com/vi/${youTubeId}/mqdefault.jpg`}
-                      alt="Video"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/35 flex items-center justify-center">
-                      <div className="h-8 w-8 rounded-full bg-black/70 flex items-center justify-center">
-                        <Play className="h-4 w-4 text-white fill-white ml-0.5" />
-                      </div>
-                    </div>
-                  </button>
-                )}
-
-                {/* Thumbnail card */}
-                {project.thumbnail_url && (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedMediaId("thumbnail")}
-                    style={{ scrollSnapAlign: "start" }}
-                    className={`relative flex-shrink-0 w-32 aspect-video rounded-sm overflow-hidden border-2 transition-all ${
-                      selectedMediaId === "thumbnail"
-                        ? "border-primary shadow-[0_0_0_1px_hsl(var(--primary)/0.4)]"
-                        : "border-border/50 hover:border-border"
-                    }`}
-                  >
-                    <img
-                      src={project.thumbnail_url}
-                      alt="Thumbnail"
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                )}
-
-                {/* Gallery image cards */}
-                {galleryStripItems.map(({ url, id }) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setSelectedMediaId(id)}
-                    style={{ scrollSnapAlign: "start" }}
-                    className={`relative flex-shrink-0 w-32 aspect-video rounded-sm overflow-hidden border-2 transition-all ${
-                      selectedMediaId === id
-                        ? "border-primary shadow-[0_0_0_1px_hsl(var(--primary)/0.4)]"
-                        : "border-border/50 hover:border-border"
-                    }`}
-                  >
-                    <img
-                      src={url}
-                      alt="Screenshot"
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <ProjectMediaViewer
+            title={project.title}
+            thumbnailUrl={project.thumbnail_url}
+            youTubeId={youTubeId}
+            activeGalleryUrl={activeGalleryUrl}
+            hasStrip={Boolean(hasStrip)}
+            galleryStripItems={galleryStripItems}
+            selectedMediaId={selectedMediaId}
+            setSelectedMediaId={setSelectedMediaId}
+          />
 
           {/* ── About ── */}
           <Card className="border-border/80 bg-card/90 text-card-foreground p-5 sm:p-6 space-y-5">

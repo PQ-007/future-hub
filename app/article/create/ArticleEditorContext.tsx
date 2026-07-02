@@ -10,12 +10,17 @@ import {
   useCallback,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { uploadImageToCloudinary } from "@/lib/cloudinaryUpload";
 import {
   buildArticleSaveRequest,
   type ArticleSavePayload,
   type ArticleStatus,
 } from "./articleSave.utils";
+import {
+  getFriendlyApiError,
+  type EditPayload,
+  type TranslationInfo,
+} from "./articleEditor.utils";
+import { useArticleImageUpload } from "./useArticleImageUpload";
 import {
   type PartialTranslation,
   type TranslationCompleteness,
@@ -33,52 +38,6 @@ export interface ArticleSettings {
   baseLangCode?: ContentLang;
   tags?: string[];
   isSerial?: boolean;
-}
-
-type TranslationInfo = {
-  lang: string;
-  title?: string;
-  subTitle?: string;
-};
-
-function getFriendlyApiError(raw: string, fallback: string): string {
-  const trimmed = raw.trim();
-  if (!trimmed) return fallback;
-
-  try {
-    const parsed = JSON.parse(trimmed) as {
-      error?: unknown;
-      message?: unknown;
-    };
-    if (typeof parsed.error === "string" && parsed.error.trim()) {
-      return parsed.error;
-    }
-    if (typeof parsed.message === "string" && parsed.message.trim()) {
-      return parsed.message;
-    }
-  } catch {
-    // Not JSON, return plain text below.
-  }
-
-  return trimmed;
-}
-
-interface EditPayload {
-  article?: {
-    id: string;
-    status?: ArticleStatus;
-  };
-  translations?: Array<{
-    language_code?: string;
-    title?: string;
-    sub_title?: string;
-    body?: string;
-  }>;
-  tags?: string[];
-  settings?: {
-    base_lang_code?: string | null;
-  };
-  error?: string;
 }
 
 interface ArticleEditorState {
@@ -229,9 +188,16 @@ export function ArticleEditorProvider({ children }: { children: ReactNode }) {
   const [viewMode, setViewMode] = useState<ViewMode>("split");
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [imageUploading, setImageUploading] = useState(false);
-  const [imageError, setImageError] = useState<string | null>(null);
   const [status, setStatus] = useState<ArticleStatus>("draft");
+
+  // Image upload owns fileInputRef / imageUploading / imageError.
+  const {
+    fileInputRef,
+    imageUploading,
+    imageError,
+    handleImageButtonClick,
+    handleImageFileChange,
+  } = useArticleImageUpload(setMdx);
 
   // Article operations state
   const [articleId, setArticleId] = useState<string | null>(null);
@@ -243,7 +209,6 @@ export function ArticleEditorProvider({ children }: { children: ReactNode }) {
   const [isEditHydrating, setIsEditHydrating] = useState(false);
   const [isEditAccessDenied, setIsEditAccessDenied] = useState(false);
 
-  const fileInputRef = useRef<HTMLInputElement>(null!);
   const isSavingRef = useRef(false);
   const isPublishingRef = useRef(false);
   const isDeletingRef = useRef(false);
@@ -888,46 +853,6 @@ export function ArticleEditorProvider({ children }: { children: ReactNode }) {
     a.download = "article.mdx";
     a.click();
     URL.revokeObjectURL(url);
-  };
-
-  const handleImageButtonClick = () => {
-    setImageError(null);
-    fileInputRef.current?.click();
-  };
-
-  const handleImageFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    if (!file) return;
-    setImageError(null);
-    if (!file.type.startsWith("image/")) {
-      setImageError("Please choose an image file.");
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setImageError("Image must be 10MB or smaller.");
-      return;
-    }
-    setImageUploading(true);
-    try {
-      const { secureUrl, publicId } = await uploadImageToCloudinary(file);
-      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-      const finalUrl =
-        cloudName && publicId
-          ? `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,w_1200/${publicId}`
-          : secureUrl;
-      setMdx((prev) => {
-        const spacer =
-          prev.trim().length === 0 ? "" : prev.endsWith("\n") ? "\n" : "\n\n";
-        return `${prev}${spacer}![](${finalUrl})\n`;
-      });
-    } catch (err) {
-      setImageError(err instanceof Error ? err.message : "Upload failed.");
-    } finally {
-      setImageUploading(false);
-    }
   };
 
   return (

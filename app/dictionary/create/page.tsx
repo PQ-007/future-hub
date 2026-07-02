@@ -35,33 +35,12 @@ import {
   X,
 } from "lucide-react";
 
-// --- Types ---
-interface TranslationInput {
-  language_code: string;
-  translated_term: string;
-  explanation: string;
-}
-
-interface ExampleInput {
-  example_text: string;
-  source: string;
-  context: string;
-  language_code: string;
-}
-
-interface DuplicateMatch {
-  id: number;
-  term: string;
-  slug: string;
-  language_code: string;
-  status: string;
-  similarity: number | null;
-}
-
-const LANG_OPTIONS = [
-  { value: "mn", label: "Монгол" },
-  { value: "ja", label: "日本語" },
-];
+import {
+  LANG_OPTIONS,
+  type DuplicateMatch,
+  type ExampleInput,
+  type TranslationInput,
+} from "./dictionaryCreate.shared";
 
 export default function DictionaryCreatePage() {
   const router = useRouter();
